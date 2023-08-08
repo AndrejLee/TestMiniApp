@@ -8,13 +8,13 @@ import drinksIcon from "static/category-drinks.svg";
 import breadIcon from "static/category-bread.svg";
 import juiceIcon from "static/category-juice.svg";
 import logo from "static/logo.png";
-import { Category, CategoryId, mapStringToCategoryId } from "types/category";
-import { Product, Variant } from "types/product";
+import { Category, CategoryId } from "types/category";
+import { Product } from "types/product";
 import { Cart } from "types/cart";
 import { Notification } from "types/notification";
 import { calculateDistance } from "utils/location";
 import { Store } from "types/delivery";
-import { calcFinalPrice, getDummyImage } from "utils/product";
+import { calcFinalPrice } from "utils/product";
 import { wait } from "utils/async";
 import { firebaseDB } from "app"
 
