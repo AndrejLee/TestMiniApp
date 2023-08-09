@@ -7,7 +7,6 @@ import milkteaIcon from "static/category-milktea.svg";
 import drinksIcon from "static/category-drinks.svg";
 import breadIcon from "static/category-bread.svg";
 import juiceIcon from "static/category-juice.svg";
-import logo from "static/logo.png";
 import { Category, CategoryId } from "types/category";
 import { Product } from "types/product";
 import { Cart } from "types/cart";
@@ -38,6 +37,7 @@ export const categoriesState = selector<Category[]>({
 
 const description = `There is a set of mock banners available <u>here</u> in three colours and in a range of standard banner sizes`;
 const productsCollection = "Products"
+const notificationsCollection = "Notifications"
 
 export const productsState = selector<Product[]>({
   key: "products",
@@ -109,23 +109,21 @@ export const totalPriceState = selector({
   },
 });
 
-export const notificationsState = atom<Notification[]>({
-  key: "notifications",
-  default: [
-    {
-      id: 1,
-      image: logo,
-      title: "Chào bạn mới",
-      content:
-        "Cảm ơn đã sử dụng ZaUI Coffee, bạn có thể dùng ứng dụng này để tiết kiệm thời gian xây dựng",
-    },
-    {
-      id: 2,
-      image: logo,
-      title: "Giảm 50% lần đầu mua hàng",
-      content: "Nhập WELCOME để được giảm 50% giá trị đơn hàng đầu tiên order",
-    },
-  ],
+export const notificationsState = selector<Notification[]>({
+  key: 'customSelector',
+  get: async () => {
+    const response = await firebaseDB.collection(notificationsCollection).get()
+    const data = await response.docs
+    return data.map(
+      (doc) => <Notification> {
+        id: doc.data().id,
+        image: doc.data().image,
+        title: doc.data().title,
+        content: doc.data().content
+      }
+    )
+  },
+  set: ({ set, get }: any, newValue: any) => {},
 });
 
 export const keywordState = atom({
