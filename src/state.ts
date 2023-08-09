@@ -51,7 +51,9 @@ export const productsState = selector<Product[]>({
           price: doc.data().price,
           image: doc.data().image,
           description: doc.data().description,
-          categoryId: doc.data().categoryId
+          categoryId: doc.data().categoryId,
+          sale: doc.data().sale,
+          variants: doc.data().variants
         }
     )
   },
