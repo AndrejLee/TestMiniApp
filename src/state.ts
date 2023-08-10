@@ -1,5 +1,5 @@
 import { atom, selector, selectorFamily } from "recoil";
-import { getLocation, getPhoneNumber, getUserInfo } from "zmp-sdk";
+import { getAccessToken, getLocation, getPhoneNumber, getUserInfo, showToast } from "zmp-sdk";
 import coffeeIcon from "static/category-coffee.svg";
 import matchaIcon from "static/category-matcha.svg";
 import foodIcon from "static/category-food.svg";
@@ -44,6 +44,17 @@ export const productsState = selector<Product[]>({
   get: async () => {
     const response = await firebaseDB.collection(productsCollection).get()
     const data = await response.docs
+    const accessToken = await getAccessToken();
+    showToast({
+      message: accessToken,
+      success: () => {
+        // xử lý khi gọi api thành công
+      },
+      fail: (error) => {
+        // xử lý khi gọi api thất bại
+        console.log(error);
+      }
+    });
     return data.map(
       (doc) => <Product>{
           id: doc.data().id,
