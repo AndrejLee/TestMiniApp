@@ -2,19 +2,21 @@ import React, { FC } from "react";
 import { ListRenderer } from "../../components/list-renderer";
 import { useRecoilValueLoadable } from "recoil";
 import { expenseState } from "../../state";
-import { getMoneyText, getDecriptionText } from "../../types/expense"
-import { Box, Header, Page, Text } from "zmp-ui";
+import { getMoneyText, getDecriptionText } from "../../types/expense";
+import { Box, Button, Header, Page, Text } from "zmp-ui";
 import { Divider } from "../../components/divider";
+import { GroupWelcome } from "../index/welcome";
+import { AddExpense } from "./add";
 
 const ExpenseList: FC = () => {
   const asyncDataLoadable = useRecoilValueLoadable(expenseState);
 
   switch (asyncDataLoadable.state) {
-    case 'loading':
+    case "loading":
       return <p>Loading...</p>;
-    case 'hasError':
+    case "hasError":
       return <p>Error loading data</p>;
-    case 'hasValue':
+    case "hasValue":
       const expenses = asyncDataLoadable.contents;
       return (
         <Box className="bg-background">
@@ -22,7 +24,10 @@ const ExpenseList: FC = () => {
             noDivider
             items={expenses}
             renderLeft={(item) => (
-              <img className="w-10 h-10 rounded-full" src={"https://img.icons8.com/ios/50/meal.png"} />
+              <img
+                className="w-10 h-10 rounded-full"
+                src={"https://img.icons8.com/ios/50/meal.png"}
+              />
             )}
             renderRight={(item) => (
               <Box key={item.id}>
@@ -46,9 +51,18 @@ const ExpenseList: FC = () => {
 const ExpensePage: FC = () => {
   return (
     <Page>
-      <Header title="Khoản chi" showBackIcon={false} />
+      <GroupWelcome name="Tăng cơ giảm mỡ" value={3500000} currency="đ" />
       <Divider />
       <ExpenseList />
+      <AddExpense>
+        {({ open }) => (
+          <Box className="fixed bottom-16 right-4">
+            <Button type="highlight" size="large" onClick={open}>
+              +
+            </Button>
+          </Box>
+        )}
+      </AddExpense>
     </Page>
   );
 };
