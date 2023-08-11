@@ -39,14 +39,27 @@ const description = `There is a set of mock banners available <u>here</u> in thr
 const productsCollection = "Products"
 const notificationsCollection = "Notifications"
 
+
 export const productsState = selector<Product[]>({
   key: "products",
   get: async () => {
     const response = await firebaseDB.collection(productsCollection).get()
     const data = await response.docs
-    const accessToken = await getAccessToken();
+    const accessToken = await getAccessToken()
+    console.log("TEST: " + accessToken)
+    const test = await fetch(`https://zah-13.123c.vn/api/v1/open-ai/ask`, {
+      method: `POST`,
+      headers: {
+        'Content-Type': 'application/json',
+        'accept': '*/*'
+      },
+      body: JSON.stringify({
+        prompt: "Generate quote of the day"
+      })
+    })
+    const jsonResponse = await test.json();
     showToast({
-      message: accessToken,
+      message: jsonResponse.code + " " + jsonResponse.data,
       success: () => {
         // xử lý khi gọi api thành công
       },

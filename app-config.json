@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "ZaUI Coffee HanLD Test",
+    "title": "Tăng Cơ Giảm Mỡ",
     "headerColor": "",
     "textColor": "black",
     "statusBarColor": "#ffffff",
@@ -9,7 +9,8 @@
     "selfControlLoading": false,
     "hideAndroidBottomNavigationBar": false,
     "hideIOSSafeAreaBottom": false,
-    "actionBarHidden": true
+    "actionBarHidden": true,
+    "textAlign": "left"
   },
   "debug": false,
   "listCSS": [],
