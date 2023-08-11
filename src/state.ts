@@ -11,6 +11,7 @@ import { Category, CategoryId } from "types/category";
 import { Product } from "types/product";
 import { Cart } from "types/cart";
 import { Notification } from "types/notification";
+import { Group } from "types/group";
 import { calculateDistance } from "utils/location";
 import { Store } from "types/delivery";
 import { calcFinalPrice } from "utils/product";
@@ -146,6 +147,17 @@ export const notificationsState = selector<Notification[]>({
         content: doc.data().content
       }
     )
+  },
+  set: ({ set, get }: any, newValue: any) => {},
+});
+
+export const groupState = selector<Group[]>({
+  key: 'customSelector',
+  get: async () => {
+    return [
+      <Group>{id:0, money:1500000, currency:"đ", title:"Ăn sáng", category:"Ăn uống", date:new Date("2023-08-11")},
+      <Group>{id:1, money:5000000, currency:"đ", title:"Ăn sáng", category:"Ăn uống", date:new Date("2023-08-11")}
+    ]
   },
   set: ({ set, get }: any, newValue: any) => {},
 });
