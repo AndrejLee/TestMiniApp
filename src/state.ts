@@ -12,6 +12,7 @@ import { Product } from "types/product";
 import { Cart } from "types/cart";
 import { Notification } from "types/notification";
 import { Group } from "types/group";
+import { Expense } from "types/expense";
 import { calculateDistance } from "utils/location";
 import { Store } from "types/delivery";
 import { calcFinalPrice } from "utils/product";
@@ -174,6 +175,21 @@ export const groupState = selector<Group[]>({
 //   },
 //   set: ({ set, get }: any, newValue: any) => {},
 // });
+
+export const expenseState = selector<Expense[]>({
+  key: 'customSelector',
+  get: async () => {
+    return [
+      <Expense>{id:0, money:1500000, currency:"đ", title:"Ăn sáng", category:"Ăn uống", byName:"Lộc", date:new Date("2023-08-11")},
+      <Expense>{id:1, money:5000000, currency:"đ", title:"Ăn trưa", category:"Ăn uống", byName:"Dương", date:new Date("2023-08-11")},
+      <Expense>{id:2, money:3500000, currency:"đ", title:"Ăn chiều", category:"Ăn uống", byName:"Giang", date:new Date("2023-08-11")},
+      <Expense>{id:3, money:1500000, currency:"đ", title:"Ăn xế", category:"Ăn uống", byName:"Lộc", date:new Date("2023-08-11")},
+      <Expense>{id:4, money:2000000, currency:"đ", title:"Ăn tối", category:"Ăn uống", byName:"Hân", date:new Date("2023-08-11")},
+      <Expense>{id:5, money:1000000, currency:"đ", title:"Ăn khuya", category:"Ăn uống", byName:"Anh", date:new Date("2023-08-11")}
+    ]
+  },
+  set: ({ set, get }: any, newValue: any) => {},
+});
 
 export const keywordState = atom({
   key: "keyword",
