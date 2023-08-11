@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import { ListRenderer } from "../../components/list-renderer";
 import { useRecoilValueLoadable } from "recoil";
 import { groupState } from "../../state";
-import { getMoneyText, getDecriptionText } from "../../types/group"
 import { Box, Header, Page, Text } from "zmp-ui";
 import { Divider } from "../../components/divider";
 
@@ -22,16 +21,16 @@ const GroupList: FC = () => {
             noDivider
             items={groups}
             renderLeft={(item) => (
-              <img className="w-10 h-10 rounded-full" src={"https://img.icons8.com/ios/50/meal.png"} />
+              <img className="w-10 h-10 rounded-full" src={"https://img.icons8.com/ios/50/conference-call--v1.png"} />
             )}
             renderRight={(item) => (
               <Box key={item.id}>
-                <Text.Header>{getMoneyText(item)}</Text.Header>
+                <Text.Header>{item.groupName}</Text.Header>
                 <Text
                   size="small"
                   className="text-gray overflow-hidden whitespace-nowrap text-ellipsis"
                 >
-                  {getDecriptionText(item)}
+                  {"text"}
                 </Text>
               </Box>
             )}
@@ -46,7 +45,7 @@ const GroupList: FC = () => {
 const GroupPage: FC = () => {
   return (
     <Page>
-      <Header title="Khoản chi" showBackIcon={false} />
+      <Header title="Các nhóm hiện tại" showBackIcon={false} />
       <Divider />
       <GroupList />
     </Page>

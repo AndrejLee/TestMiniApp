@@ -157,7 +157,9 @@ export const groupState = selector<Group[]>({
   key: 'customSelector',
   get: async () => {
     return [
-      <Group>{id:0, groupName:"Tăng cơ giảm mỡ"}
+      <Group>{id:0, groupName:"Tăng cơ giảm mỡ"},
+      <Group>{id:1, groupName:"Hackathon"},
+      <Group>{id:2, groupName:"We love ZA"}
     ]
   },
   set: ({ set, get }: any, newValue: any) => {},
