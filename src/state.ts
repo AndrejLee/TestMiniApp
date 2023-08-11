@@ -155,8 +155,12 @@ export const groupState = selector<Group[]>({
   key: 'customSelector',
   get: async () => {
     return [
-      <Group>{id:0, money:1500000, currency:"đ", title:"Ăn sáng", category:"Ăn uống", date:new Date("2023-08-11")},
-      <Group>{id:1, money:5000000, currency:"đ", title:"Ăn sáng", category:"Ăn uống", date:new Date("2023-08-11")}
+      <Group>{id:0, money:1500000, currency:"đ", title:"Ăn sáng", category:"Ăn uống", byName:"Lộc", date:new Date("2023-08-11")},
+      <Group>{id:1, money:5000000, currency:"đ", title:"Ăn trưa", category:"Ăn uống", byName:"Dương", date:new Date("2023-08-11")},
+      <Group>{id:2, money:3500000, currency:"đ", title:"Ăn chiều", category:"Ăn uống", byName:"Giang", date:new Date("2023-08-11")},
+      <Group>{id:3, money:1500000, currency:"đ", title:"Ăn xế", category:"Ăn uống", byName:"Lộc", date:new Date("2023-08-11")},
+      <Group>{id:4, money:2000000, currency:"đ", title:"Ăn tối", category:"Ăn uống", byName:"Hân", date:new Date("2023-08-11")},
+      <Group>{id:5, money:1000000, currency:"đ", title:"Ăn khuya", category:"Ăn uống", byName:"Anh", date:new Date("2023-08-11")}
     ]
   },
   set: ({ set, get }: any, newValue: any) => {},
