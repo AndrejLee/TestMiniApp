@@ -383,3 +383,8 @@ export const currentListGroup = atom<Group[]>({
   key: "currentListGroup",
   default: []
 })
+
+export const newGroupTitleName = atom({
+  key: "newGroupTitleName",
+  default: ""
+})

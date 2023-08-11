@@ -1,14 +1,12 @@
 import React, { FC, Suspense, useEffect, useState } from "react";
-import { Box, Page } from "zmp-ui";
-import { Inquiry } from "./inquiry";
+import { Box, Button, Page, Text } from "zmp-ui";
 import { Welcome } from "./welcome";
-import { Banner } from "./banner";
-import { Categories } from "./categories";
-import { Recommend } from "./recommend";
-import { ProductList } from "./product-list";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { currentListGroup, currentUserState } from "state";
+import { closeApp } from "zmp-sdk";
+import { ListRenderer } from "components/list-renderer";
+import { useNavigate } from "react-router";
 import { Divider } from "components/divider";
-import { useRecoilValue } from "recoil";
-import { currentUserState, groupState, userState } from "state";
 
 const HomePage: React.FunctionComponent = () => {
   return (
@@ -18,16 +16,6 @@ const HomePage: React.FunctionComponent = () => {
         <Suspense>
           <LoadMainResult></LoadMainResult>
         </Suspense>
-        <Inquiry />
-        <Banner />
-        <Suspense>
-          <Categories />
-        </Suspense>
-        <Divider />
-        <Recommend />
-        <Divider />
-        <ProductList />
-        <Divider />
       </Box>
     </Page>
   );
@@ -35,7 +23,8 @@ const HomePage: React.FunctionComponent = () => {
 
 const LoadMainResult: FC = () => {
   const currentUser = useRecoilValue(currentUserState);
-  const listGroup = useRecoilValue(groupState);
+  const [listGroup, setListGroup] = useRecoilState(currentListGroup);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchData();
@@ -47,33 +36,54 @@ const LoadMainResult: FC = () => {
       if (currentUser == null) {
         await closeApp({});
       } else {
+        fetch(`https://zah-13.123c.vn/api/v1/groups`, {
+          method: "GET",
+          headers: {
+            Authorization: `${currentUser.id}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data.data);
+            setListGroup(data.data);
+          });
       }
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-    }
+    } catch (error) {}
+  };
+
+  const createNewGroup = () => {
+    navigate("/creategroup");
   };
 
   return (
-    <div></div>
-    // <Box className="bg-background">
-    //   <ListRenderer
-    //     noDivider
-    //     items={listGroup}
-    //     renderLeft={(item) => <img className="w-10 h-10 rounded-full" src={} />}
-    //     renderRight={(item) => (
-    //       <Box key={item.id}>
-    //         <Text.Header>{item.title}</Text.Header>
-    //         <Text
-    //           size="small"
-    //           className="text-gray overflow-hidden whitespace-nowrap text-ellipsis"
-    //         >
-    //           {item.content}
-    //         </Text>
-    //       </Box>
-    //     )}
-    //   />
-    // </Box>
+    <Page>
+      <Box className="bg-background justify-center flex">
+        {listGroup.length > 0 ? (
+          <ListRenderer
+            items={listGroup}
+            renderLeft={(item) => (
+              <img
+                className="w-10 h-10 rounded-full"
+                src={"https://img.icons8.com/ios/50/meal.png"}
+              />
+            )}
+            renderRight={(item) => (
+              <Box key={item.id}>
+                <Text.Header>{item.title}</Text.Header>
+              </Box>
+            )}
+          />
+        ) : (
+          <div>KHÔNG CÓ GÌ</div>
+        )}
+      </Box>
+      <Divider />
+      <Box className="bottom justify-center flex">
+        <Button size="large" onClick={() => createNewGroup()}>
+          + Tạo Nhóm Mới
+        </Button>
+      </Box>
+    </Page>
   );
 };
 

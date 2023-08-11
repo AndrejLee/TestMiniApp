@@ -10,6 +10,7 @@ import ProfilePage from "pages/profile/profile";
 import SearchPage from "pages/search";
 import { getSystemInfo } from "zmp-sdk";
 import { ScrollRestoration } from "./scroll-restoration";
+import CreateGroup from "pages/group/creategroup";
 
 if (getSystemInfo().platform === "android") {
   const androidSafeTop = Math.round(
@@ -27,14 +28,15 @@ export const Layout: FC = () => {
     <Box flex flexDirection="column" className="h-screen">
       <ScrollRestoration />
       <Box className="flex-1 flex flex-col overflow-hidden">
-          <Routes>
-            <Route path="/" element={<HomePage />}></Route>
-            <Route path="/category" element={<CategoryPage />}></Route>
-            <Route path="/search" element={<SearchPage />}></Route>
-            <Route path="/notification" element={<GroupPage />}></Route>
-            <Route path="/cart" element={<CartPage />}></Route>
-            <Route path="/profile" element={<ProfilePage />}></Route>
-          </Routes>
+        <Routes>
+          <Route path="/" element={<HomePage />}></Route>
+          <Route path="/creategroup" element={<CreateGroup />}></Route>
+          <Route path="/category" element={<CategoryPage />}></Route>
+          <Route path="/search" element={<SearchPage />}></Route>
+          <Route path="/notification" element={<GroupPage />}></Route>
+          <Route path="/cart" element={<CartPage />}></Route>
+          <Route path="/profile" element={<ProfilePage />}></Route>
+        </Routes>
       </Box>
       <Navigation />
     </Box>
