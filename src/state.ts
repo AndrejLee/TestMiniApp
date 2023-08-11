@@ -17,6 +17,7 @@ import { Store } from "types/delivery";
 import { calcFinalPrice } from "utils/product";
 import { wait } from "utils/async";
 import { firebaseDB } from "app"
+import { User } from "types/user";
 
 export const userState = selector({
   key: "user",
@@ -135,7 +136,7 @@ export const totalPriceState = selector({
 });
 
 export const notificationsState = selector<Notification[]>({
-  key: 'customSelector',
+  key: 'teno',
   get: async () => {
     const response = await firebaseDB.collection(notificationsCollection).get()
     const data = await response.docs
@@ -165,6 +166,14 @@ export const groupState = selector<Group[]>({
   },
   set: ({ set, get }: any, newValue: any) => {},
 });
+
+// export const currentGroupState = selector<Group[]>({
+//   key: 'customSelector',
+//   get: async () => {
+    
+//   },
+//   set: ({ set, get }: any, newValue: any) => {},
+// });
 
 export const keywordState = atom({
   key: "keyword",
@@ -348,3 +357,29 @@ export const phoneState = selector<string | boolean>({
     return false;
   },
 });
+
+export const currentUserState = selector<User | null>({
+  key: "currentUserState",
+  get: async () => {
+    try {
+      const accessToken = await getAccessToken();
+      const response = await fetch(`https://zah-13.123c.vn/api/v1/authentication`, {
+        method: "GET",
+        headers: {
+          "Authorization": `${accessToken}`,
+        },
+      });
+      console.log(response)
+      const data = await response.json()
+      if (data.code != 200) return null
+      return data.data
+    } catch (error) {
+      return null
+    }
+  },
+});
+
+export const currentListGroup = atom<Group[]>({
+  key: "currentListGroup",
+  default: []
+})
