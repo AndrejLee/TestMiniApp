@@ -19,6 +19,7 @@ import { getConfig } from "utils/config";
 import { utilGetMoneyText } from "types/expense";
 import { useNavigate } from "react-router";
 import { Divider } from "components/divider";
+import { GroupCate, GroupCategories, GroupCateId } from "types/category";
 
 export const Welcome: FC<{
   shouldBack?: boolean;
@@ -57,6 +58,9 @@ export const GroupWelcome: FC = () => {
   const currency = "đ";
   const navigate = useNavigate();
   const group = useRecoilValue(currentSelectedGroup);
+  const cateId = group?.category ?? "OTHER";
+  console.log(group?.name);
+  const cate: GroupCate = GroupCategories[cateId] ?? GroupCategories.OTHER;
   const currentUser = useRecoilValue(currentUserState);
   const setData = useSetRecoilState(atomNetState);
 
@@ -102,7 +106,7 @@ export const GroupWelcome: FC = () => {
       >
         <img
           className="w-10 h-10 rounded -inset left-5"
-          src="https://img.icons8.com/ios/50/hug.png"
+          src={cate.icon ?? "https://img.icons8.com/ios/50/hug.png"}
         />
         <Text.Title size="xLarge"> {group?.name ?? "Unknown"} </Text.Title>
       </Box>

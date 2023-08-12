@@ -198,13 +198,13 @@ export const expenseState = selector<Expense[]>({
 
 export const atomNetState = atom<NetInfo | null>({
   key: "atomNetState",
-  default: null
-})
+  default: null,
+});
 
 export const netState = selector<NetInfo | null>({
   key: "customSelector",
-  get: async ({get}) => {
-    const data = get(atomNetState)
+  get: async ({ get }) => {
+    const data = get(atomNetState);
     return data;
   },
   set: ({ set, get }: any, newValue: any) => {},
@@ -431,7 +431,7 @@ export const currentUserState = selector<User | null>({
 export const currentListGroup = atom<Group[]>({
   key: "currentListGroup",
   default: [
-    <Group>{ id: 0, name: "Xóm nhỏ vui cùng xóm lớn" },
+    <Group>{ id: 0, name: "Xóm nhỏ vui cùng xóm lớn", category: "HOME" },
     <Group>{ id: 2, name: "Xóm bự vui cùng xóm lớn" },
   ],
 });

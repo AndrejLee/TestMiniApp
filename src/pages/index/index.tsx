@@ -13,6 +13,8 @@ import { useNavigate } from "react-router";
 import { Divider } from "components/divider";
 import { HeaderBanner } from "./headerBanner";
 import { Group } from "types/group";
+import { GroupCategories, GroupCate, GroupCateId } from "types/category";
+import { isUndefined } from "lodash";
 
 const HomePage: React.FunctionComponent = () => {
   return (
@@ -67,6 +69,12 @@ const LoadMainResult: FC = () => {
     selectGroup(group);
     navigate("/expense");
   };
+  const defaultIcon = "https://img.icons8.com/ios/50/meal.png";
+  const getIcon = (cateId: GroupCateId) => {
+    if (isUndefined(cateId)) return defaultIcon;
+    let temp = GroupCategories[cateId].icon;
+    return temp ?? defaultIcon;
+  };
 
   return (
     <Page>
@@ -81,7 +89,7 @@ const LoadMainResult: FC = () => {
               renderLeft={(item) => (
                 <img
                   className="w-10 h-10 rounded-full"
-                  src={"https://img.icons8.com/ios/50/meal.png"}
+                  src={getIcon(item.category)}
                 />
               )}
               renderRight={(item) => (

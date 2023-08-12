@@ -1,3 +1,5 @@
+import { string } from "prop-types";
+
 export type CategoryId =
   | "coffee"
   | "matcha"
