@@ -17,6 +17,7 @@ import {
 import { showToast, openProfilePicker } from "zmp-sdk/apis";
 import { Page, Header, Box, Text, Input, Select, Button } from "zmp-ui";
 import { SelectValueType } from "zmp-ui/select";
+import { GroupCategories, GroupCateId } from "types/category";
 
 const CreateGroup: FC = () => {
   const currentUser = useRecoilValue(currentUserState);
@@ -24,6 +25,7 @@ const CreateGroup: FC = () => {
   const [selectedCate, setCategory] = useRecoilState(newGroupCategory);
   const [createdGroupId, setCreatedGroupId] = useRecoilState(newCreatedGroupId);
   const navigate = useNavigate();
+  const cates: Array<GroupCateId> = ["HOME", "TRIP", "COUPLE", "OTHER"];
 
   const handleChange = useCallback(
     debounce((keyword: string) => {
@@ -195,6 +197,7 @@ const CreateGroup: FC = () => {
           allowClear
         />
       </Box>
+
       <Box p={4} className="bg-white">
         <Select
           placeholder="Mục đích"
@@ -202,9 +205,9 @@ const CreateGroup: FC = () => {
           defaultValue={[]}
           onChange={(value) => onGroupCategoryChange(value)}
         >
-          <Option value="TRIP" title="Du lịch" />
-          <Option value="HOME" title="Ở chung" />
-          <Option value="OTHER" title="Khác" />
+          {cates.map((cate) => (
+            <Option value={cate} title={GroupCategories[cate].name} />
+          ))}
         </Select>
       </Box>
       <Box className="fixed right-0" mt={2} mr={4}>
