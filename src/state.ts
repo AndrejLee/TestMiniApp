@@ -19,6 +19,7 @@ import { calcFinalPrice } from "utils/product";
 import { wait } from "utils/async";
 import { firebaseDB } from "app"
 import { User } from "types/user";
+import GroupPage from "pages/group/group";
 
 export const userState = selector({
   key: "user",
@@ -153,17 +154,17 @@ export const notificationsState = selector<Notification[]>({
   set: ({ set, get }: any, newValue: any) => {},
 });
 
-export const groupState = selector<Group[]>({
-  key: 'customSelector',
-  get: async () => {
-    return [
-      <Group>{id:0, groupName:"Tăng cơ giảm mỡ"},
-      <Group>{id:1, groupName:"Hackathon"},
-      <Group>{id:2, groupName:"We love ZA"}
-    ]
-  },
-  set: ({ set, get }: any, newValue: any) => {},
-});
+// export const groupState = selector<Group[]>({
+//   key: 'customSelector',
+//   get: async () => {
+//     return [
+//       <Group>{id:0, groupName:"Tăng cơ giảm mỡ"},
+//       <Group>{id:1, groupName:"Hackathon"},
+//       <Group>{id:2, groupName:"We love ZA"}
+//     ]
+//   },
+//   set: ({ set, get }: any, newValue: any) => {},
+// });
 
 // export const currentGroupState = selector<Group[]>({
 //   key: 'customSelector',
@@ -396,6 +397,11 @@ export const currentUserState = selector<User | null>({
 export const currentListGroup = atom<Group[]>({
   key: "currentListGroup",
   default: []
+})
+
+export const currentSelectedGroup = atom<Group | null>({
+  key: "currentSelectedGroup",
+  default: null
 })
 
 export const newGroupTitleName = atom({

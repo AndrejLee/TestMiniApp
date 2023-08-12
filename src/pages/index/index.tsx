@@ -2,11 +2,17 @@ import React, { FC, Suspense, useEffect, useState } from "react";
 import { Box, Button, Page, Text } from "zmp-ui";
 import { Welcome } from "./welcome";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { currentListGroup, currentUserState } from "state";
+import {
+  currentListGroup,
+  currentSelectedGroup,
+  currentUserState,
+} from "state";
 import { closeApp } from "zmp-sdk";
 import { ListRenderer } from "components/list-renderer";
 import { useNavigate } from "react-router";
 import { Divider } from "components/divider";
+import { HeaderBanner } from "./headerBanner";
+import { Group } from "types/group";
 
 const HomePage: React.FunctionComponent = () => {
   return (
@@ -24,6 +30,7 @@ const HomePage: React.FunctionComponent = () => {
 const LoadMainResult: FC = () => {
   const currentUser = useRecoilValue(currentUserState);
   const [listGroup, setListGroup] = useRecoilState(currentListGroup);
+  const selectGroup = useSetRecoilState(currentSelectedGroup);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -56,11 +63,18 @@ const LoadMainResult: FC = () => {
     navigate("/creategroup");
   };
 
+  const handleItemClick = (group: Group) => {
+    selectGroup(group);
+    navigate("");
+  };
+
   return (
     <Page>
+      <HeaderBanner />
       <Box className="bg-background justify-center flex">
         {listGroup.length > 0 ? (
           <ListRenderer
+            onClick={(item) => handleItemClick(item)}
             items={listGroup}
             renderLeft={(item) => (
               <img
@@ -69,8 +83,8 @@ const LoadMainResult: FC = () => {
               />
             )}
             renderRight={(item) => (
-              <Box key={item.id}>
-                <Text.Header>{item.title}</Text.Header>
+              <Box key={item.id} mt={2}>
+                <Text.Header>{item.name}</Text.Header>
               </Box>
             )}
           />
@@ -78,8 +92,7 @@ const LoadMainResult: FC = () => {
           <div>KHÔNG CÓ GÌ</div>
         )}
       </Box>
-      <Divider />
-      <Box className="bottom justify-center flex">
+      <Box className="fixed bottom-16 right-4">
         <Button size="large" onClick={() => createNewGroup()}>
           + Tạo Nhóm Mới
         </Button>
