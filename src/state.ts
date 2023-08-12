@@ -182,19 +182,16 @@ export const notificationsState = selector<Notification[]>({
 //   set: ({ set, get }: any, newValue: any) => {},
 // });
 
+export const atomExpenseState = atom<Expense[]>({
+  key: "atomExpenseState",
+  default: []
+})
+
 export const expenseState = selector<Expense[]>({
-  key: "customSelector",
+  key: "customSelectorExpense",
   get: async ({get}) => {
-    const currentUser = get(currentUserState)
-    const currentGroup = get(currentSelectedGroup)
-    if (currentGroup != null && currentUser != null) {
-      return fetch(`https://zah-13.123c.vn/api/v1/expenses/groups/${currentGroup.id}`, {
-        method: "GET",
-        headers: {
-          Authorization: `${currentUser.id}`,
-        },
-      }).then((response) => response.json());
-    } else return []
+    const data = get(atomExpenseState)
+    return data
   },
   set: ({ set, get }: any, newValue: any) => {},
 });

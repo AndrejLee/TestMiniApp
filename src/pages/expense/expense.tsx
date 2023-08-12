@@ -1,7 +1,17 @@
 import React, { FC, useEffect } from "react";
 import { ListRenderer } from "../../components/list-renderer";
-import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from "recoil";
-import { currentUserState, expenseState } from "../../state";
+import {
+  useRecoilState,
+  useRecoilValue,
+  useRecoilValueLoadable,
+  useSetRecoilState,
+} from "recoil";
+import {
+  atomExpenseState,
+  currentSelectedGroup,
+  currentUserState,
+  expenseState,
+} from "../../state";
 import { getMoneyText, getDecriptionText } from "../../types/expense";
 import { Box, Button, Header, Page, Text } from "zmp-ui";
 import { Divider } from "../../components/divider";
@@ -10,6 +20,27 @@ import { AddExpense } from "./add";
 import { Group } from "types/group";
 
 const ExpenseList: FC = () => {
+  const currentUser = useRecoilValue(currentUserState);
+  const currentGroup = useRecoilValue(currentSelectedGroup);
+  const setData = useSetRecoilState(atomExpenseState);
+
+  useEffect(() => {
+    // Fetch data from API
+    if (currentGroup != null && currentUser != null) {
+      fetch(
+        `https://zah-13.123c.vn/api/v1/expenses/groups/${currentGroup.id}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `${currentUser.id}`,
+          },
+        }
+      )
+        .then((response) => response.json())
+        .then((data) => setData(data.data));
+    }
+  }, []);
+
   const asyncDataLoadable = useRecoilValueLoadable(expenseState);
 
   switch (asyncDataLoadable.state) {
