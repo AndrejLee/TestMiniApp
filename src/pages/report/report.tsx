@@ -82,12 +82,20 @@ const ReportList: FC = () => {
                       size="small"
                       className="text-gray overflow-hidden whitespace-nowrap text-ellipsis"
                     >
-                      {item.balance < 0 ? "nợ nhóm" : "cho mượn"}{" "}
+                      {item.balance == 0
+                        ? "sạch nợ"
+                        : item.balance > 0
+                        ? "nợ nhóm"
+                        : "cho mượn"}{" "}
                       {utilGetMoneyText(item.balance, "đ")}
                     </Text>
                   </Box>
-                  <Button className="fixed right-4" size="small">
-                    {item.balance < 0 ? "Nhắc" : "Trả"}
+                  <Button
+                    className="fixed right-4"
+                    size="small"
+                    disabled={item.balance == 0}
+                  >
+                    {item.balance == 0 ? "" : item.balance > 0 ? "Nhắc" : "Trả"}
                   </Button>
                 </Box>
               )}
