@@ -65,7 +65,7 @@ const LoadMainResult: FC = () => {
 
   const handleItemClick = (group: Group) => {
     selectGroup(group);
-    navigate("");
+    navigate("/notification");
   };
 
   return (

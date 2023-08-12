@@ -12,6 +12,7 @@ import SearchPage from "pages/search";
 import { getSystemInfo } from "zmp-sdk";
 import { ScrollRestoration } from "./scroll-restoration";
 import CreateGroup from "pages/group/creategroup";
+import NotificationPage from "pages/notification";
 
 if (getSystemInfo().platform === "android") {
   const androidSafeTop = Math.round(
@@ -34,7 +35,8 @@ export const Layout: FC = () => {
           <Route path="/creategroup" element={<CreateGroup />}></Route>
           <Route path="/category" element={<CategoryPage />}></Route>
           <Route path="/search" element={<SearchPage />}></Route>
-          <Route path="/notification" element={<ExpensePage />}></Route>
+          <Route path="/notification" element={<NotificationPage />}></Route>
+          <Route path="/expense" element={<ExpensePage />}></Route>
           <Route path="/cart" element={<CartPage />}></Route>
           <Route path="/profile" element={<ProfilePage />}></Route>
         </Routes>

@@ -6,6 +6,7 @@ import logo from "static/logo.png";
 import appConfig from "../../../app-config.json";
 import { getConfig } from "utils/config";
 import { utilGetMoneyText } from "types/expense";
+import { useNavigate } from "react-router";
 
 export const Welcome: FC = () => {
   const user = useRecoilValueLoadable(userState);
@@ -44,7 +45,7 @@ export const GroupWelcome: FC<{
   currency: string;
 }> = ({ name, value, currency }) => {
   const user = useRecoilValueLoadable(userState);
-
+  const navigate = useNavigate();
   return (
     <Header
       className="app-header no-border pl-4 flex-none pb-[6px]"
@@ -66,7 +67,9 @@ export const GroupWelcome: FC<{
             <Text
               className="text-blue-500 underline"
               color="to-blue-600 blue"
-              onClick={() => {}}
+              onClick={() => {
+                navigate("/report");
+              }}
             >
               Xem chi tiết {">>>"}
             </Text>
