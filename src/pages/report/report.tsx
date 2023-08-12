@@ -1,6 +1,7 @@
 import React, { FC, useEffect } from "react";
 import { ListRenderer } from "../../components/list-renderer";
 import {
+  useRecoilState,
   useRecoilValue,
   useRecoilValueLoadable,
   useSetRecoilState,
@@ -8,6 +9,7 @@ import {
 import {
   atomExpenseState,
   atomNetState,
+  currentReportPayed,
   currentSelectedGroup,
   currentUserState,
   expenseState,
@@ -28,6 +30,7 @@ const ReportList: FC = () => {
   const currentUser = useRecoilValue(currentUserState);
   const currentGroup = useRecoilValue(currentSelectedGroup);
   const setData = useSetRecoilState(atomNetState);
+  const [currentPayed, setCurrentPayed] = useRecoilState(currentReportPayed);
 
   useEffect(() => {
     // Fetch data from API
@@ -60,6 +63,7 @@ const ReportList: FC = () => {
     case "hasValue":
       const netInfo = asyncDataLoadable.contents;
       if (netInfo != null) {
+        setCurrentPayed(netInfo.totalAmount);
         return (
           <Box className="bg-background">
             <ListRenderer
@@ -77,7 +81,10 @@ const ReportList: FC = () => {
               renderRight={(item) => (
                 <Box key={item.user.id} flex>
                   <Box type="left">
-                    <Text.Header>{item.user.name}</Text.Header>
+                    <Text.Header>
+                      {item.user.name}{" "}
+                      {item.user.id == currentGroup?.owner.id ? "👑" : ""}
+                    </Text.Header>
                     <Text
                       size="small"
                       className="text-gray overflow-hidden whitespace-nowrap text-ellipsis"
@@ -90,13 +97,22 @@ const ReportList: FC = () => {
                       {utilGetMoneyText(item.balance, "đ")}
                     </Text>
                   </Box>
-                  <Button
-                    className="fixed right-4"
-                    size="small"
-                    disabled={item.balance == 0}
-                  >
-                    {item.balance == 0 ? "" : item.balance > 0 ? "Nhắc" : "Trả"}
-                  </Button>
+                  {currentGroup?.owner.id == currentUser?.id &&
+                  item.user.id != currentUser?.id ? (
+                    <Button
+                      className="fixed right-4"
+                      size="small"
+                      disabled={item.balance == 0}
+                    >
+                      {item.balance == 0
+                        ? ""
+                        : item.balance > 0
+                        ? "Nhắc"
+                        : "Trả"}
+                    </Button>
+                  ) : (
+                    <div></div>
+                  )}
                 </Box>
               )}
             />
@@ -115,10 +131,17 @@ export interface ExpensePageProps {
 }
 
 const ReportPage: FC<ExpensePageProps> = ({ group }) => {
+  const currentPayed = useRecoilValue(currentReportPayed);
+  const currentGroup = useRecoilValue(currentSelectedGroup);
+
   return (
     <Page>
       <Welcome shouldBack={true} />
-      <NetWelcome name="Tăng cơ giảm mỡ" payed={4500000} currency="đ" />
+      <NetWelcome
+        name={currentGroup == null ? "" : currentGroup.name}
+        payed={currentPayed}
+        currency="đ"
+      />
       <Divider />
       <ReportList />
     </Page>

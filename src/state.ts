@@ -210,6 +210,16 @@ export const netState = selector<NetInfo | null>({
   set: ({ set, get }: any, newValue: any) => {},
 });
 
+export const currentReportPayed = atom<number>({
+ key: "currentReportPayed",
+ default: 0
+})
+
+export const currentBalanceInExpense = atom<number>({
+  key: "currentBalanceInExpense",
+  default: 0
+})
+
 export const keywordState = atom({
   key: "keyword",
   default: "",

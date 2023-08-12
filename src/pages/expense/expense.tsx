@@ -8,9 +8,12 @@ import {
 } from "recoil";
 import {
   atomExpenseState,
+  atomNetState,
+  currentReportPayed,
   currentSelectedGroup,
   currentUserState,
   expenseState,
+  netState,
 } from "../../state";
 import { getMoneyText, getDecriptionText } from "../../types/expense";
 import { Box, Button, Header, Page, Text } from "zmp-ui";
