@@ -69,7 +69,7 @@ const LoadMainResult: FC = () => {
     selectGroup(group);
     navigate("/expense");
   };
-  const defaultIcon = "https://img.icons8.com/ios/50/meal.png";
+  const defaultIcon = GroupCategories.OTHER.icon;
   const getIcon = (cateId: GroupCateId) => {
     if (isUndefined(cateId)) return defaultIcon;
     let temp = GroupCategories[cateId].icon;
