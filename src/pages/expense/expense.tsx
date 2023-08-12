@@ -7,6 +7,7 @@ import { Box, Button, Header, Page, Text } from "zmp-ui";
 import { Divider } from "../../components/divider";
 import { GroupWelcome } from "../index/welcome";
 import { AddExpense } from "./add";
+import { Group } from "types/group";
 
 const ExpenseList: FC = () => {
   const asyncDataLoadable = useRecoilValueLoadable(expenseState);
@@ -48,13 +49,17 @@ const ExpenseList: FC = () => {
   }
 };
 
-const ExpensePage: FC = () => {
+export interface ExpensePageProps {
+  group?: Group;
+}
+
+const ExpensePage: FC<ExpensePageProps> = ({ group }) => {
   return (
     <Page>
       <GroupWelcome name="Tăng cơ giảm mỡ" value={3500000} currency="đ" />
       <Divider />
       <ExpenseList />
-      <AddExpense>
+      <AddExpense group={group}>
         {({ open }) => (
           <Box className="fixed bottom-16 right-4">
             <Button type="highlight" size="large" onClick={open}>
