@@ -1,17 +1,19 @@
+import { User } from "./user"
+
 export interface Expense {
-  id: number
-  money: number
-  category: string
-  title: string
-  date: Date
-  currency: string
-  byId: number
-  byName: string
-  participant: Array<number>
+  id: number,
+  group_id: number,
+  amount: number,
+  user: User,
+  category: string,
+  title: string,
+  date: Date,
+  createdBy: User,
+  participant: Array<User>
 }
 
 export function getMoneyText(expense: Expense) : string {
-  return utilGetMoneyText(expense.money, expense.currency)
+  return utilGetMoneyText(expense.amount, "VND")
 }
 
 export function utilGetMoneyText(money: number, currency: string) : string {
@@ -23,6 +25,6 @@ export function utilGetMoneyText(money: number, currency: string) : string {
 }
 
 export function getDecriptionText(expense: Expense) : string {
-  let decr = expense.title + " - chi bởi " + expense.byName
+  let decr = expense.title + " - chi bởi " + expense.createdBy.name
   return decr
 }

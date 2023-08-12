@@ -183,6 +183,7 @@ export const notificationsState = selector<Notification[]>({
 // });
 
 export const expenseState = selector<Expense[]>({
+<<<<<<< HEAD
   key: "customSelector",
   get: async () => {
     return [
@@ -257,6 +258,20 @@ export const netState = selector<NetInfo>({
         <Net>{ id: 3, name: "Hân", net: -2400000 },
       ],
     };
+=======
+  key: 'customSelector',
+  get: async ({get}) => {
+    const currentUser = get(currentUserState)
+    const currentGroup = get(currentSelectedGroup)
+    if (currentGroup != null && currentUser != null) {
+      return fetch(`https://zah-13.123c.vn/api/v1/expenses/groups/${currentGroup.id}`, {
+        method: "GET",
+        headers: {
+          Authorization: `${currentUser.id}`,
+        },
+      }).then((response) => response.json());
+    } else return []
+>>>>>>> 9f585ae (support get all expenses)
   },
   set: ({ set, get }: any, newValue: any) => {},
 });
