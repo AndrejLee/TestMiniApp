@@ -25,6 +25,7 @@ import { Divider } from "../../components/divider";
 import { NetWelcome, Welcome } from "../index/welcome";
 import { Group } from "types/group";
 import { Net, NetInfo } from "types/net";
+import { openShareSheet } from "zmp-sdk/apis";
 
 const ReportList: FC = () => {
   const currentUser = useRecoilValue(currentUserState);
@@ -54,6 +55,21 @@ const ReportList: FC = () => {
   }, []);
 
   const asyncDataLoadable = useRecoilValueLoadable(netState);
+
+  const handleOnClick = (balance: number) => {
+    if (balance > 0) {
+      openShareSheet({
+        type: "zmp",
+        data: {
+          title: "My Zalo Mini App - HomePage",
+          description: "Home page",
+          thumbnail: "https://sample-videos.com/img/Sample-jpg-image-50kb.jpg",
+        },
+        success: (res) => {},
+        fail: (err) => {},
+      });
+    }
+  };
 
   switch (asyncDataLoadable.state) {
     case "loading":
@@ -103,6 +119,7 @@ const ReportList: FC = () => {
                       className="fixed right-4"
                       size="small"
                       disabled={item.balance == 0}
+                      onClick={() => handleOnClick(item.balance)}
                     >
                       {item.balance == 0
                         ? ""
