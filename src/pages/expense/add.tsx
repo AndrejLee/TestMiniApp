@@ -1,19 +1,21 @@
 import { Sheet } from "components/fullscreen-sheet";
 import React, { FC, ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   atomExpenseState,
   cartState,
   currentSelectedGroup,
   currentUserState,
 } from "state";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { Box, Button, Input, Text } from "zmp-ui";
 import { Group } from "types/group";
 import { toNumber } from "lodash";
 import { onCallbackData, showToast } from "zmp-sdk";
 import { useNavigate } from "react-router";
 import { Expense } from "types/expense";
+import { showToast } from "zmp-sdk";
+import { utilGetNumberText, utilGetNumberFromText } from "types/expense";
 
 export interface AddExpenseData {
   money: number;
@@ -109,9 +111,9 @@ export const AddExpense: FC<AddExpenseProps> = ({
                   placeholder="Tiền chi trả"
                   clearable
                   allowClear
-                  value={money}
+                  value={utilGetNumberText(money)}
                   onChange={(e) => {
-                    const temp = toNumber(e.target.value);
+                    var temp = utilGetNumberFromText(e.target.value);
                     if (!isNaN(temp) || temp < 0) {
                       setMoney(temp);
                     }
