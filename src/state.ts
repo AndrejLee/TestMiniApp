@@ -1,5 +1,11 @@
 import { atom, selector, selectorFamily } from "recoil";
-import { getAccessToken, getLocation, getPhoneNumber, getUserInfo, showToast } from "zmp-sdk";
+import {
+  getAccessToken,
+  getLocation,
+  getPhoneNumber,
+  getUserInfo,
+  showToast,
+} from "zmp-sdk";
 import coffeeIcon from "static/category-coffee.svg";
 import matchaIcon from "static/category-matcha.svg";
 import foodIcon from "static/category-food.svg";
@@ -17,9 +23,10 @@ import { calculateDistance } from "utils/location";
 import { Store } from "types/delivery";
 import { calcFinalPrice } from "utils/product";
 import { wait } from "utils/async";
-import { firebaseDB } from "app"
+import { firebaseDB } from "app";
 import { User } from "types/user";
 import GroupPage from "pages/group/group";
+import { Net, NetInfo } from "types/net";
 
 export const userState = selector({
   key: "user",
@@ -40,27 +47,26 @@ export const categoriesState = selector<Category[]>({
 });
 
 const description = `There is a set of mock banners available <u>here</u> in three colours and in a range of standard banner sizes`;
-const productsCollection = "Products"
-const notificationsCollection = "Notifications"
-
+const productsCollection = "Products";
+const notificationsCollection = "Notifications";
 
 export const productsState = selector<Product[]>({
   key: "products",
   get: async () => {
-    const response = await firebaseDB.collection(productsCollection).get()
-    const data = await response.docs
-    const accessToken = await getAccessToken()
-    console.log("TEST: " + accessToken)
+    const response = await firebaseDB.collection(productsCollection).get();
+    const data = await response.docs;
+    const accessToken = await getAccessToken();
+    console.log("TEST: " + accessToken);
     const test = await fetch(`https://zah-13.123c.vn/api/v1/open-ai/ask`, {
       method: `POST`,
       headers: {
-        'Content-Type': 'application/json',
-        'accept': '*/*'
+        "Content-Type": "application/json",
+        accept: "*/*",
       },
       body: JSON.stringify({
-        prompt: "Generate quote of the day"
-      })
-    })
+        prompt: "Generate quote of the day",
+      }),
+    });
     const jsonResponse = await test.json();
     showToast({
       message: jsonResponse.code + " " + jsonResponse.data,
@@ -70,10 +76,11 @@ export const productsState = selector<Product[]>({
       fail: (error) => {
         // xử lý khi gọi api thất bại
         console.log(error);
-      }
+      },
     });
     return data.map(
-      (doc) => <Product>{
+      (doc) =>
+        <Product>{
           id: doc.data().id,
           name: doc.data().title,
           price: doc.data().price,
@@ -81,9 +88,9 @@ export const productsState = selector<Product[]>({
           description: doc.data().description,
           categoryId: doc.data().categoryId,
           sale: doc.data().sale,
-          variants: doc.data().variants
+          variants: doc.data().variants,
         }
-    )
+    );
   },
 });
 
@@ -138,18 +145,19 @@ export const totalPriceState = selector({
 });
 
 export const notificationsState = selector<Notification[]>({
-  key: 'teno',
+  key: "teno",
   get: async () => {
-    const response = await firebaseDB.collection(notificationsCollection).get()
-    const data = await response.docs
+    const response = await firebaseDB.collection(notificationsCollection).get();
+    const data = await response.docs;
     return data.map(
-      (doc) => <Notification> {
-        id: doc.data().id,
-        image: doc.data().image,
-        title: doc.data().title,
-        content: doc.data().content
-      }
-    )
+      (doc) =>
+        <Notification>{
+          id: doc.data().id,
+          image: doc.data().image,
+          title: doc.data().title,
+          content: doc.data().content,
+        }
+    );
   },
   set: ({ set, get }: any, newValue: any) => {},
 });
@@ -169,22 +177,72 @@ export const notificationsState = selector<Notification[]>({
 // export const currentGroupState = selector<Group[]>({
 //   key: 'customSelector',
 //   get: async () => {
-    
+
 //   },
 //   set: ({ set, get }: any, newValue: any) => {},
 // });
 
 export const expenseState = selector<Expense[]>({
-  key: 'customSelector',
+  key: "customSelector",
   get: async () => {
     return [
-      <Expense>{id:0, money:1500000, currency:"đ", title:"Ăn sáng", category:"Ăn uống", byName:"Lộc", date:new Date("2023-08-11")},
-      <Expense>{id:1, money:5000000, currency:"đ", title:"Ăn trưa", category:"Ăn uống", byName:"Dương", date:new Date("2023-08-11")},
-      <Expense>{id:2, money:3500000, currency:"đ", title:"Ăn chiều", category:"Ăn uống", byName:"Giang", date:new Date("2023-08-11")},
-      <Expense>{id:3, money:1500000, currency:"đ", title:"Ăn xế", category:"Ăn uống", byName:"Lộc", date:new Date("2023-08-11")},
-      <Expense>{id:4, money:2000000, currency:"đ", title:"Ăn tối", category:"Ăn uống", byName:"Hân", date:new Date("2023-08-11")},
-      <Expense>{id:5, money:1000000, currency:"đ", title:"Ăn khuya", category:"Ăn uống", byName:"Anh", date:new Date("2023-08-11")}
-    ]
+      <Expense>{
+        id: 0,
+        money: 1500000,
+        currency: "đ",
+        title: "Ăn sáng",
+        category: "Ăn uống",
+        byName: "Lộc",
+        date: new Date("2023-08-11"),
+      },
+      <Expense>{
+        id: 1,
+        money: 5000000,
+        currency: "đ",
+        title: "Ăn trưa",
+        category: "Ăn uống",
+        byName: "Dương",
+        date: new Date("2023-08-11"),
+      },
+      <Expense>{
+        id: 2,
+        money: 3500000,
+        currency: "đ",
+        title: "Ăn chiều",
+        category: "Ăn uống",
+        byName: "Giang",
+        date: new Date("2023-08-11"),
+      },
+      <Expense>{
+        id: 3,
+        money: 1500000,
+        currency: "đ",
+        title: "Ăn xế",
+        category: "Ăn uống",
+        byName: "Lộc",
+        date: new Date("2023-08-11"),
+      },
+      <Expense>{
+        id: 4,
+        money: 2000000,
+        currency: "đ",
+        title: "Ăn tối",
+        category: "Ăn uống",
+        byName: "Hân",
+        date: new Date("2023-08-11"),
+      },
+      <Expense>{
+        id: 5,
+        money: 1000000,
+        currency: "đ",
+        title: "Ăn khuya",
+        category: "Ăn uống",
+        byName: "Anh",
+        date: new Date("2023-08-11"),
+      },
+    ];
+  },
+  set: ({ set, get }: any, newValue: any) => {},
 });
 
 export const netState = selector<NetInfo>({
@@ -391,44 +449,47 @@ export const currentUserState = selector<User | null>({
   get: async () => {
     try {
       const accessToken = await getAccessToken();
-      console.log(accessToken)
-      const response = await fetch(`https://zah-13.123c.vn/api/v1/authentication`, {
-        method: "GET",
-        headers: {
-          "Authorization": `${accessToken}`,
-        },
-      });
-      console.log(response)
-      const data = await response.json()
-      if (data.code != 200) return null
-      return data.data
+      console.log(accessToken);
+      const response = await fetch(
+        `https://zah-13.123c.vn/api/v1/authentication`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `${accessToken}`,
+          },
+        }
+      );
+      console.log(response);
+      const data = await response.json();
+      if (data.code != 200) return null;
+      return data.data;
     } catch (error) {
-      return null
+      return null;
     }
   },
 });
 
 export const currentListGroup = atom<Group[]>({
   key: "currentListGroup",
-  default: []
-})
+  default: [],
+});
 
 export const currentSelectedGroup = atom<Group | null>({
   key: "currentSelectedGroup",
-  default: null
-})
+  default: null,
+});
 
 export const newGroupTitleName = atom({
   key: "newGroupTitleName",
-  default: ""
-})
+  default: "",
+});
 
 export const newGroupCategory = atom({
   key: "newGroupCategory",
-  default: ""
-})
+  default: "",
+});
 
 export const newCreatedGroupId = atom({
   key: "newCreatedGroupId",
-  default: ""
-})
+  default: "",
+});
