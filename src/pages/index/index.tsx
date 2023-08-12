@@ -36,6 +36,7 @@ const LoadMainResult: FC = () => {
       if (currentUser == null) {
         await closeApp({});
       } else {
+        console.log(currentUser.id);
         fetch(`https://zah-13.123c.vn/api/v1/groups`, {
           method: "GET",
           headers: {

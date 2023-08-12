@@ -376,6 +376,7 @@ export const currentUserState = selector<User | null>({
   get: async () => {
     try {
       const accessToken = await getAccessToken();
+      console.log(accessToken)
       const response = await fetch(`https://zah-13.123c.vn/api/v1/authentication`, {
         method: "GET",
         headers: {
