@@ -48,36 +48,36 @@ export const GroupWelcome: FC<{
   const user = useRecoilValueLoadable(userState);
   const navigate = useNavigate();
   return (
-    <Header
-      className="app-header no-border pl-4 flex-none pb-[6px]"
-      showBackIcon={false}
-      title={
-        (
-          <Box alignItems="center" className="space-x-2">
-            <Box flex alignItems="center" className="space-x-2">
-              <img
-                className="w-10 h-10 rounded-lg border-inset"
-                src={getConfig((c) => c.template.headerLogo) || logo}
-              />
-              <Text.Title size="xLarge"> {name} </Text.Title>
-            </Box>
-            <Text size="xLarge">
-              {value < 0 ? "Bạn còn nợ tổng cộng" : "Mọi người còn nợ bạn"}
-            </Text>
-            <Text size="xLarge">{utilGetMoneyText(value, currency)}</Text>
-            <Text
-              className="text-blue-500 underline"
-              color="to-blue-600 blue"
-              onClick={() => {
-                navigate("/report");
-              }}
-            >
-              Xem chi tiết {">>>"}
-            </Text>
-          </Box>
-        ) as unknown as string
-      }
-    />
+    <Box className="space-x-2 bg-slate-100" m={3}>
+      <Box
+        flex
+        alignItems="center"
+        className="space-x-2"
+        marginWidth={100}
+        p={2}
+      >
+        <img
+          className="w-10 h-10 rounded border-inset left-5"
+          src="https://img.icons8.com/ios/50/hug.png"
+        />
+        <Text.Title size="xLarge"> {name} </Text.Title>
+      </Box>
+      <Box className="bg-blue-100 rounded-xl" p={3}>
+        <Text size="xLarge">
+          {value < 0 ? "Bạn còn nợ tổng cộng" : "Mọi người còn nợ bạn"}
+        </Text>
+        <Text size="xLarge">{utilGetMoneyText(value, currency)}</Text>
+        <Text
+          className="text-blue-500 underline"
+          color="to-blue-600 blue"
+          onClick={() => {
+            navigate("/report");
+          }}
+        >
+          Xem chi tiết {">>>"}
+        </Text>
+      </Box>
+    </Box>
   );
 };
 
@@ -90,23 +90,26 @@ export const NetWelcome: FC<{
   const user = useRecoilValueLoadable(userState);
   const navigate = useNavigate();
   return (
-    <Box className="space-x-2 bg-slate-100" m={5}>
-      <div>
-        <Box flex alignItems="center" className="space-x-2" marginWidth={100}>
-          <img
-            className="w-10 h-10 rounded-lg border-inset left-5"
-            src="https://img.icons8.com/ios/50/hug.png"
-          />
-          <Text.Title size="xLarge"> {name} </Text.Title>
-        </Box>
-        <br />
-        <Box className="bg-blue-100 rounded-t-lg" p={3}>
-          <Text size="xLarge">Tổng chi</Text>
-          <Text size="xLarge" className="text-red-400">
-            {utilGetMoneyText(payed, currency)}
-          </Text>
-        </Box>
-      </div>
+    <Box className="space-x-2 bg-slate-100" m={3}>
+      <Box
+        flex
+        alignItems="center"
+        className="space-x-2"
+        marginWidth={100}
+        p={2}
+      >
+        <img
+          className="w-10 h-10 rounded border-inset left-5"
+          src="https://img.icons8.com/ios/50/hug.png"
+        />
+        <Text.Title size="xLarge"> {name} </Text.Title>
+      </Box>
+      <Box className="bg-blue-100 rounded-xl" p={3}>
+        <Text size="xLarge">Tổng chi</Text>
+        <Text size="xLarge" className="text-red-400">
+          {utilGetMoneyText(payed, currency)}
+        </Text>
+      </Box>
     </Box>
   );
 };

@@ -15,7 +15,7 @@ import {
 import { getMoneyText, getDecriptionText } from "../../types/expense";
 import { Box, Button, Header, Page, Text } from "zmp-ui";
 import { Divider } from "../../components/divider";
-import { GroupWelcome } from "../index/welcome";
+import { GroupWelcome, Welcome } from "../index/welcome";
 import { AddExpense } from "./add";
 import { Group } from "types/group";
 
@@ -87,7 +87,8 @@ export interface ExpensePageProps {
 const ExpensePage: FC<ExpensePageProps> = ({ group }) => {
   return (
     <Page>
-      <GroupWelcome name="Tăng cơ giảm mỡ" value={3500000} currency="đ" />
+      <Welcome />
+      <GroupWelcome name="Hackathon" value={3500000} currency="đ" />
       <Divider />
       <ExpenseList />
       <AddExpense group={group}>
