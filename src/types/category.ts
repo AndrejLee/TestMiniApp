@@ -99,21 +99,21 @@ export const GroupCategories = {
   HOME: <GroupCate>{
     id: "HOME",
     name: "Nhà chung",
-    icon: "/docs/icons/shop.png",
+    icon: "https://img.icons8.com/ios/50/home--v1.png",
   },
   TRIP: <GroupCate>{
     id: "TRIP",
     name: "Du lịch",
-    icon: "/docs/icons/travel.png",
+    icon: "https://img.icons8.com/ios/50/residence.png",
   },
   COUPLE: <GroupCate>{
     id: "COUPLE",
     name: "Cặp đôi",
-    icon: "/docs/icons/food.png",
+    icon: "https://img.icons8.com/ios/50/airport-transfer.png",
   },
   OTHER: <GroupCate>{
     id: "OTHER",
     name: "Khác",
-    icon: "/docs/icons/sport.png",
+    icon: "https://img.icons8.com/ios/50/connection-status-off.png",
   },
 };
