@@ -408,3 +408,13 @@ export const newGroupTitleName = atom({
   key: "newGroupTitleName",
   default: ""
 })
+
+export const newGroupCategory = atom({
+  key: "newGroupCategory",
+  default: ""
+})
+
+export const newCreatedGroupId = atom({
+  key: "newCreatedGroupId",
+  default: ""
+})
