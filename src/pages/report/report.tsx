@@ -1,7 +1,18 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { ListRenderer } from "../../components/list-renderer";
-import { useRecoilValueLoadable } from "recoil";
-import { expenseState, netState } from "../../state";
+import {
+  useRecoilValue,
+  useRecoilValueLoadable,
+  useSetRecoilState,
+} from "recoil";
+import {
+  atomExpenseState,
+  atomNetState,
+  currentSelectedGroup,
+  currentUserState,
+  expenseState,
+  netState,
+} from "../../state";
 import {
   getMoneyText,
   getDecriptionText,
@@ -14,6 +25,31 @@ import { Group } from "types/group";
 import { Net, NetInfo } from "types/net";
 
 const ReportList: FC = () => {
+  const currentUser = useRecoilValue(currentUserState);
+  const currentGroup = useRecoilValue(currentSelectedGroup);
+  const setData = useSetRecoilState(atomNetState);
+
+  useEffect(() => {
+    // Fetch data from API
+    if (currentGroup != null && currentUser != null) {
+      fetch(
+        `https://zah-13.123c.vn/api/v1/groups/${currentGroup.id}/reports/detailed`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `${currentUser.id}`,
+            accept: `*/*`,
+          },
+        }
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          setData(data.data);
+          console.log(data.data);
+        });
+    }
+  }, []);
+
   const asyncDataLoadable = useRecoilValueLoadable(netState);
 
   switch (asyncDataLoadable.state) {
@@ -23,37 +59,44 @@ const ReportList: FC = () => {
       return <p>Error loading data</p>;
     case "hasValue":
       const netInfo = asyncDataLoadable.contents;
-      return (
-        <Box className="bg-background">
-          <ListRenderer
-            noDivider
-            items={netInfo.members}
-            renderLeft={(item) => (
-              <img
-                className="w-10 h-10 rounded-full"
-                src={item.avatar ?? "https://img.icons8.com/ios/50/sun.png"}
-              />
-            )}
-            renderRight={(item) => (
-              <Box key={item.id} flex>
-                <Box type="left">
-                  <Text.Header>{item.name}</Text.Header>
-                  <Text
-                    size="small"
-                    className="text-gray overflow-hidden whitespace-nowrap text-ellipsis"
-                  >
-                    {item.net < 0 ? "nợ nhóm" : "cho mượn"}{" "}
-                    {utilGetMoneyText(item.net, "đ")}
-                  </Text>
+      if (netInfo != null) {
+        return (
+          <Box className="bg-background">
+            <ListRenderer
+              noDivider
+              items={netInfo.members}
+              renderLeft={(item) => (
+                <img
+                  className="w-10 h-10 rounded-full"
+                  src={
+                    item.user.avatarUrl ??
+                    "https://img.icons8.com/ios/50/sun.png"
+                  }
+                />
+              )}
+              renderRight={(item) => (
+                <Box key={item.user.id} flex>
+                  <Box type="left">
+                    <Text.Header>{item.user.name}</Text.Header>
+                    <Text
+                      size="small"
+                      className="text-gray overflow-hidden whitespace-nowrap text-ellipsis"
+                    >
+                      {item.balance < 0 ? "nợ nhóm" : "cho mượn"}{" "}
+                      {utilGetMoneyText(item.balance, "đ")}
+                    </Text>
+                  </Box>
+                  <Button className="fixed right-4" size="small">
+                    {item.balance < 0 ? "Nhắc" : "Trả"}
+                  </Button>
                 </Box>
-                <Button className="fixed right-4" size="small">
-                  {item.net < 0 ? "Nhắc" : "Trả"}
-                </Button>
-              </Box>
-            )}
-          />
-        </Box>
-      );
+              )}
+            />
+          </Box>
+        );
+      } else {
+        return null;
+      }
     default:
       return null;
   }

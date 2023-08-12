@@ -196,18 +196,16 @@ export const expenseState = selector<Expense[]>({
   set: ({ set, get }: any, newValue: any) => {},
 });
 
-export const netState = selector<NetInfo>({
+export const atomNetState = atom<NetInfo | null>({
+  key: "atomNetState",
+  default: null
+})
+
+export const netState = selector<NetInfo | null>({
   key: "customSelector",
-  get: async () => {
-    return <NetInfo>{
-      payed: 20000000,
-      members: [
-        <Net>{ id: 0, name: "Lộc", net: 2000000 },
-        <Net>{ id: 1, name: "Anh", net: 300000 },
-        <Net>{ id: 2, name: "Dương", net: 1200000 },
-        <Net>{ id: 3, name: "Hân", net: -2400000 },
-      ],
-    };
+  get: async ({get}) => {
+    const data = get(atomNetState)
+    return data;
   },
   set: ({ set, get }: any, newValue: any) => {},
 });
