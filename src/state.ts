@@ -185,6 +185,20 @@ export const expenseState = selector<Expense[]>({
       <Expense>{id:4, money:2000000, currency:"đ", title:"Ăn tối", category:"Ăn uống", byName:"Hân", date:new Date("2023-08-11")},
       <Expense>{id:5, money:1000000, currency:"đ", title:"Ăn khuya", category:"Ăn uống", byName:"Anh", date:new Date("2023-08-11")}
     ]
+});
+
+export const netState = selector<NetInfo>({
+  key: "customSelector",
+  get: async () => {
+    return <NetInfo>{
+      payed: 20000000,
+      members: [
+        <Net>{ id: 0, name: "Lộc", net: 2000000 },
+        <Net>{ id: 1, name: "Anh", net: 300000 },
+        <Net>{ id: 2, name: "Dương", net: 1200000 },
+        <Net>{ id: 3, name: "Hân", net: -2400000 },
+      ],
+    };
   },
   set: ({ set, get }: any, newValue: any) => {},
 });

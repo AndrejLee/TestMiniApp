@@ -7,6 +7,7 @@ import appConfig from "../../../app-config.json";
 import { getConfig } from "utils/config";
 import { utilGetMoneyText } from "types/expense";
 import { useNavigate } from "react-router";
+import { Divider } from "components/divider";
 
 export const Welcome: FC = () => {
   const user = useRecoilValueLoadable(userState);
@@ -77,5 +78,35 @@ export const GroupWelcome: FC<{
         ) as unknown as string
       }
     />
+  );
+};
+
+export const NetWelcome: FC<{
+  name: string;
+  payed: number;
+  currency?: string;
+}> = ({ name, payed, currency }) => {
+  if (!currency) currency = "đ";
+  const user = useRecoilValueLoadable(userState);
+  const navigate = useNavigate();
+  return (
+    <Box className="space-x-2 bg-slate-100" m={5}>
+      <div>
+        <Box flex alignItems="center" className="space-x-2" marginWidth={100}>
+          <img
+            className="w-10 h-10 rounded-lg border-inset left-5"
+            src="https://img.icons8.com/ios/50/hug.png"
+          />
+          <Text.Title size="xLarge"> {name} </Text.Title>
+        </Box>
+        <br />
+        <Box className="bg-blue-100 rounded-t-lg" p={3}>
+          <Text size="xLarge">Tổng chi</Text>
+          <Text size="xLarge" className="text-red-400">
+            {utilGetMoneyText(payed, currency)}
+          </Text>
+        </Box>
+      </div>
+    </Box>
   );
 };
