@@ -43,7 +43,6 @@ export const Layout: FC = () => {
           <Route path="/report" element={<ReportPage />}></Route>
         </Routes>
       </Box>
-      <Navigation />
     </Box>
   );
 };

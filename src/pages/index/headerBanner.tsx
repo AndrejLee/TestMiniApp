@@ -14,14 +14,14 @@ export const HeaderBanner: FC = () => {
       pr={5}
       flex
     >
-      <Box className="" m={2}>
+      <Box className="" m={3}>
         <Text size="xLarge" className="text-black" bold>
-          Chào {currentUser?.name ?? "Lộc"},
+          Chào {currentUser?.name ?? "Lộc Trần"},
         </Text>
       </Box>
       <Box className="">
         <img
-          className="w-10 h-10 rounded-full"
+          className="w-12 h-12 rounded-full"
           src={
             currentUser?.avatarUrl ?? "https://img.icons8.com/ios/50/cloud.png"
           }

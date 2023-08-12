@@ -66,7 +66,7 @@ export interface ExpensePageProps {
 const ReportPage: FC<ExpensePageProps> = ({ group }) => {
   return (
     <Page>
-      <Welcome />
+      <Welcome shouldBack={true} />
       <NetWelcome name="Tăng cơ giảm mỡ" payed={4500000} currency="đ" />
       <Divider />
       <ReportList />

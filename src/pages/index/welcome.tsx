@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { Box, Header, Text } from "zmp-ui";
-import { useRecoilValueLoadable } from "recoil";
-import { userState } from "state";
+import { useRecoilValue, useRecoilValueLoadable } from "recoil";
+import { currentSelectedGroup, userState } from "state";
 import logo from "static/logo.png";
 import appConfig from "../../../app-config.json";
 import { getConfig } from "utils/config";
@@ -9,13 +9,15 @@ import { utilGetMoneyText } from "types/expense";
 import { useNavigate } from "react-router";
 import { Divider } from "components/divider";
 
-export const Welcome: FC = () => {
+export const Welcome: FC<{
+  shouldBack?: boolean;
+}> = ({ shouldBack }) => {
   const user = useRecoilValueLoadable(userState);
 
   return (
     <Header
       className="app-header no-border pl-4 flex-none pb-[6px]"
-      showBackIcon={false}
+      showBackIcon={shouldBack ?? false}
       title={
         (
           <Box flex alignItems="center" className="space-x-2">
@@ -40,13 +42,11 @@ export const Welcome: FC = () => {
   );
 };
 
-export const GroupWelcome: FC<{
-  name: string;
-  value: number;
-  currency: string;
-}> = ({ name, value, currency }) => {
-  const user = useRecoilValueLoadable(userState);
+export const GroupWelcome: FC = () => {
+  const value = 35000000;
+  const currency = "đ";
   const navigate = useNavigate();
+  const group = useRecoilValue(currentSelectedGroup);
   return (
     <Box className="space-x-2 bg-slate-100" m={3}>
       <Box
@@ -57,10 +57,10 @@ export const GroupWelcome: FC<{
         p={2}
       >
         <img
-          className="w-10 h-10 rounded border-inset left-5"
+          className="w-10 h-10 rounded -inset left-5"
           src="https://img.icons8.com/ios/50/hug.png"
         />
-        <Text.Title size="xLarge"> {name} </Text.Title>
+        <Text.Title size="xLarge"> {group?.name ?? "Unknown"} </Text.Title>
       </Box>
       <Box className="bg-blue-100 rounded-xl" p={3}>
         <Text size="xLarge">

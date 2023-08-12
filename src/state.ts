@@ -184,14 +184,14 @@ export const notificationsState = selector<Notification[]>({
 
 export const atomExpenseState = atom<Expense[]>({
   key: "atomExpenseState",
-  default: []
-})
+  default: [],
+});
 
 export const expenseState = selector<Expense[]>({
   key: "customSelectorExpense",
-  get: async ({get}) => {
-    const data = get(atomExpenseState)
-    return data
+  get: async ({ get }) => {
+    const data = get(atomExpenseState);
+    return data;
   },
   set: ({ set, get }: any, newValue: any) => {},
 });
@@ -422,7 +422,10 @@ export const currentUserState = selector<User | null>({
 
 export const currentListGroup = atom<Group[]>({
   key: "currentListGroup",
-  default: [],
+  default: [
+    <Group>{ id: 0, name: "Xóm nhỏ vui cùng xóm lớn" },
+    <Group>{ id: 2, name: "Xóm bự vui cùng xóm lớn" },
+  ],
 });
 
 export const currentSelectedGroup = atom<Group | null>({

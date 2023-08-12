@@ -71,23 +71,26 @@ const LoadMainResult: FC = () => {
   return (
     <Page>
       <HeaderBanner />
-      <Box className="bg-background justify-center flex">
+      <Box className="bg-background">
         {listGroup.length > 0 ? (
-          <ListRenderer
-            onClick={(item) => handleItemClick(item)}
-            items={listGroup}
-            renderLeft={(item) => (
-              <img
-                className="w-10 h-10 rounded-full"
-                src={"https://img.icons8.com/ios/50/meal.png"}
-              />
-            )}
-            renderRight={(item) => (
-              <Box key={item.id} mt={2}>
-                <Text.Header>{item.name}</Text.Header>
-              </Box>
-            )}
-          />
+          <Box m={4}>
+            <ListRenderer
+              onClick={(item) => handleItemClick(item)}
+              items={listGroup}
+              noDivider
+              renderLeft={(item) => (
+                <img
+                  className="w-10 h-10 rounded-full"
+                  src={"https://img.icons8.com/ios/50/meal.png"}
+                />
+              )}
+              renderRight={(item) => (
+                <Box key={item.id} mt={2}>
+                  <Text.Header>{item.name}</Text.Header>
+                </Box>
+              )}
+            />
+          </Box>
         ) : (
           <Box mt={10}>
             <Text size="large" className="text-slate-500">
@@ -96,7 +99,7 @@ const LoadMainResult: FC = () => {
           </Box>
         )}
       </Box>
-      <Box className="fixed bottom-16 right-4">
+      <Box className="fixed bottom-6 right-4">
         <Button size="large" onClick={() => createNewGroup()}>
           + Tạo Nhóm Mới
         </Button>

@@ -87,13 +87,13 @@ export interface ExpensePageProps {
 const ExpensePage: FC<ExpensePageProps> = ({ group }) => {
   return (
     <Page>
-      <Welcome />
-      <GroupWelcome name="Hackathon" value={3500000} currency="đ" />
+      <Welcome shouldBack={true} />
+      <GroupWelcome />
       <Divider />
       <ExpenseList />
       <AddExpense group={group}>
         {({ open }) => (
-          <Box className="fixed bottom-16 right-4">
+          <Box className="fixed bottom-6 right-4">
             <Button type="highlight" size="large" onClick={open}>
               +
             </Button>
