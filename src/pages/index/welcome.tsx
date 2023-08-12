@@ -115,18 +115,20 @@ export const GroupWelcome: FC = () => {
           {utilGetMoneyText(value, currency)}
         </Text>
         <Text
-          className="text-blue-500 underline"
+          className="text-blue-500"
           color="to-blue-600 blue"
           onClick={() => {
             navigate("/report");
           }}
         >
-          Xem chi tiết {">>>"}
+          Xem chi tiết {">"}
         </Text>
         {value == 0 ? (
           <div></div>
         ) : (
-          <Button size="small">{value > 0 ? "Trả" : "Nhắc"}</Button>
+          <Button className="mt-2" size="small">
+            {value > 0 ? "Trả" : "Nhắc"}
+          </Button>
         )}
       </Box>
     </Box>
@@ -158,7 +160,7 @@ export const NetWelcome: FC<{
       </Box>
       <Box className="bg-blue-100 rounded-xl" p={3}>
         <Text size="xLarge">Tổng chi</Text>
-        <Text size="xLarge" className="text-red-400">
+        <Text size="xLarge" bold={true} className="text-red-400">
           {utilGetMoneyText(payed, currency)}
         </Text>
       </Box>
