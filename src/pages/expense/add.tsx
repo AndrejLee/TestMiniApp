@@ -8,13 +8,13 @@ import {
   currentUserState,
 } from "state";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { Box, Button, Input, Text } from "zmp-ui";
+import { Box, Button, Input, Select, Text } from "zmp-ui";
 import { Group } from "types/group";
 import { toNumber } from "lodash";
-import { onCallbackData, showToast } from "zmp-sdk";
+import { hideKeyboard, onCallbackData, showToast } from "zmp-sdk";
 import { useNavigate } from "react-router";
 import { Expense } from "types/expense";
-import { showToast } from "zmp-sdk";
+import { ExpenseCateId, ExpenseCategories } from "types/category";
 import { utilGetNumberText, utilGetNumberFromText } from "types/expense";
 
 export interface AddExpenseData {
@@ -43,6 +43,18 @@ export const AddExpense: FC<AddExpenseProps> = ({
   const currentUser = useRecoilValue(currentUserState);
   const currentGroup = useRecoilValue(currentSelectedGroup);
   const [listExpense, setListExpense] = useRecoilState(atomExpenseState);
+  const [exCate, setExCate] = useState("OTHERR");
+  const cates: Array<ExpenseCateId> = [
+    "OOD",
+    "ACCOMMODATION",
+    "TRANSPORTATION",
+    "SHOPPING",
+    "BEAUTY",
+    "SPORTS",
+    "ENTERTAINMENT",
+    "HEALTH",
+    "OTHER",
+  ];
 
   const clear = () => {
     setVisible(false);
@@ -73,6 +85,7 @@ export const AddExpense: FC<AddExpenseProps> = ({
             amount: money,
             title: msg,
             date: date,
+            category: exCate,
             userId: currentUser.id,
             participants: currentGroup.members.map((member) => member.id),
           }),
@@ -125,6 +138,26 @@ export const AddExpense: FC<AddExpenseProps> = ({
                   className="w-11 h-11"
                   src="https://img.icons8.com/ios/50/goodnotes.png"
                 />
+                <Select
+                  placeholder="Mục đích"
+                  multiple={false}
+                  defaultValue={[]}
+                  value={exCate}
+                  onChange={(value) => {
+                    setExCate(value);
+                    hideKeyboard();
+                  }}
+                >
+                  {cates.map((cate) => (
+                    <Option value={cate} title={ExpenseCategories[cate].name} />
+                  ))}
+                </Select>
+              </Box>
+              <Box flex className="space-x-4">
+                <img
+                  className="w-11 h-11"
+                  src="https://img.icons8.com/ios/50/goodnotes.png"
+                />
                 <Input
                   placeholder="Mô tả"
                   clearable
@@ -165,7 +198,7 @@ export const AddExpense: FC<AddExpenseProps> = ({
                 type="highlight"
                 fullWidth
                 onClick={() => {
-                  addRecord(money, input, date);
+                  addRecord(money, input, date, exCate);
                 }}
               >
                 Thêm record

@@ -1,4 +1,5 @@
 import { toNumber } from "lodash";
+import { ExpenseCateId } from "./category";
 import { User } from "./user";
 
 export interface Expense {
@@ -6,7 +7,7 @@ export interface Expense {
   group_id: number;
   amount: number;
   user: User;
-  category: string;
+  category: ExpenseCateId;
   title: string;
   date: Date;
   createdBy: User;

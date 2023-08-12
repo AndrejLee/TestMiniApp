@@ -1,3 +1,4 @@
+import { isUndefined } from "lodash";
 import { string } from "prop-types";
 
 export type CategoryId =
@@ -79,6 +80,12 @@ export const ExpenseCategories = {
     icon: "https://img.icons8.com/ios/50/connection-status-off.png",
   },
 };
+
+export function getExpenseIcon(cateId: ExpenseCateId) {
+  if (isUndefined(cateId)) return ExpenseCategories.OTHER.icon;
+  let temp = ExpenseCategories[cateId].icon;
+  return temp ?? ExpenseCategories.OTHER.icon;
+}
 
 export type GroupCateId = "HOME" | "TRIP" | "COUPLE" | "OTHER";
 

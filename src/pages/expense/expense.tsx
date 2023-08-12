@@ -21,6 +21,7 @@ import { Divider } from "../../components/divider";
 import { GroupWelcome, Welcome } from "../index/welcome";
 import { AddExpense } from "./add";
 import { Group } from "types/group";
+import { getExpenseIcon } from "types/category";
 
 const ExpenseList: FC = () => {
   const currentUser = useRecoilValue(currentUserState);
@@ -61,7 +62,7 @@ const ExpenseList: FC = () => {
             renderLeft={(item) => (
               <img
                 className="w-10 h-10 rounded-full"
-                src={"https://img.icons8.com/ios/50/meal.png"}
+                src={getExpenseIcon(item.category)}
               />
             )}
             renderRight={(item) => (
