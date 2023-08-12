@@ -1,12 +1,19 @@
 import { Sheet } from "components/fullscreen-sheet";
 import React, { FC, ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { useSetRecoilState } from "recoil";
-import { cartState } from "state";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  atomExpenseState,
+  cartState,
+  currentSelectedGroup,
+  currentUserState,
+} from "state";
 import { Box, Button, Input, Text } from "zmp-ui";
 import { Group } from "types/group";
 import { toNumber } from "lodash";
-import { showToast } from "zmp-sdk";
+import { onCallbackData, showToast } from "zmp-sdk";
+import { useNavigate } from "react-router";
+import { Expense } from "types/expense";
 
 export interface AddExpenseData {
   money: number;
@@ -31,6 +38,9 @@ export const AddExpense: FC<AddExpenseProps> = ({
   const [visible, setVisible] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const setCart = useSetRecoilState(cartState);
+  const currentUser = useRecoilValue(currentUserState);
+  const currentGroup = useRecoilValue(currentSelectedGroup);
+  const [listExpense, setListExpense] = useRecoilState(atomExpenseState);
 
   const clear = () => {
     setVisible(false);
@@ -47,7 +57,37 @@ export const AddExpense: FC<AddExpenseProps> = ({
       });
       return false;
     }
-    clear();
+    if (currentGroup != null && currentUser != null) {
+      fetch(
+        `https://zah-13.123c.vn/api/v1/expenses/groups/${currentGroup.id}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `${currentUser.id}`,
+            "Content-Type": "application/json",
+            accept: "*/*",
+          },
+          body: JSON.stringify({
+            amount: money,
+            title: msg,
+            date: date,
+            userId: currentUser.id,
+            participants: currentGroup.members.map((member) => member.id),
+          }),
+        }
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.code == 200) {
+            showToast({ message: "Tạo hoạt động thành công" });
+            const updatedItems = [...listExpense, data.data];
+            setListExpense(updatedItems);
+          } else {
+            showToast({ message: "Tạo hoạt động thất bại, code " + data.code });
+          }
+          clear();
+        });
+    }
     return true;
   };
   return (
