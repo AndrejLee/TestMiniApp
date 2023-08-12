@@ -183,65 +183,18 @@ export const notificationsState = selector<Notification[]>({
 // });
 
 export const expenseState = selector<Expense[]>({
-<<<<<<< HEAD
   key: "customSelector",
-  get: async () => {
-    return [
-      <Expense>{
-        id: 0,
-        money: 1500000,
-        currency: "đ",
-        title: "Ăn sáng",
-        category: "Ăn uống",
-        byName: "Lộc",
-        date: new Date("2023-08-11"),
-      },
-      <Expense>{
-        id: 1,
-        money: 5000000,
-        currency: "đ",
-        title: "Ăn trưa",
-        category: "Ăn uống",
-        byName: "Dương",
-        date: new Date("2023-08-11"),
-      },
-      <Expense>{
-        id: 2,
-        money: 3500000,
-        currency: "đ",
-        title: "Ăn chiều",
-        category: "Ăn uống",
-        byName: "Giang",
-        date: new Date("2023-08-11"),
-      },
-      <Expense>{
-        id: 3,
-        money: 1500000,
-        currency: "đ",
-        title: "Ăn xế",
-        category: "Ăn uống",
-        byName: "Lộc",
-        date: new Date("2023-08-11"),
-      },
-      <Expense>{
-        id: 4,
-        money: 2000000,
-        currency: "đ",
-        title: "Ăn tối",
-        category: "Ăn uống",
-        byName: "Hân",
-        date: new Date("2023-08-11"),
-      },
-      <Expense>{
-        id: 5,
-        money: 1000000,
-        currency: "đ",
-        title: "Ăn khuya",
-        category: "Ăn uống",
-        byName: "Anh",
-        date: new Date("2023-08-11"),
-      },
-    ];
+  get: async ({get}) => {
+    const currentUser = get(currentUserState)
+    const currentGroup = get(currentSelectedGroup)
+    if (currentGroup != null && currentUser != null) {
+      return fetch(`https://zah-13.123c.vn/api/v1/expenses/groups/${currentGroup.id}`, {
+        method: "GET",
+        headers: {
+          Authorization: `${currentUser.id}`,
+        },
+      }).then((response) => response.json());
+    } else return []
   },
   set: ({ set, get }: any, newValue: any) => {},
 });
@@ -258,20 +211,6 @@ export const netState = selector<NetInfo>({
         <Net>{ id: 3, name: "Hân", net: -2400000 },
       ],
     };
-=======
-  key: 'customSelector',
-  get: async ({get}) => {
-    const currentUser = get(currentUserState)
-    const currentGroup = get(currentSelectedGroup)
-    if (currentGroup != null && currentUser != null) {
-      return fetch(`https://zah-13.123c.vn/api/v1/expenses/groups/${currentGroup.id}`, {
-        method: "GET",
-        headers: {
-          Authorization: `${currentUser.id}`,
-        },
-      }).then((response) => response.json());
-    } else return []
->>>>>>> 9f585ae (support get all expenses)
   },
   set: ({ set, get }: any, newValue: any) => {},
 });

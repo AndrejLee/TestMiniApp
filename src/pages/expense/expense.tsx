@@ -1,7 +1,7 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { ListRenderer } from "../../components/list-renderer";
-import { useRecoilValueLoadable } from "recoil";
-import { expenseState } from "../../state";
+import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from "recoil";
+import { currentUserState, expenseState } from "../../state";
 import { getMoneyText, getDecriptionText } from "../../types/expense";
 import { Box, Button, Header, Page, Text } from "zmp-ui";
 import { Divider } from "../../components/divider";
