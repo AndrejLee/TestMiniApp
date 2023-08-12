@@ -89,7 +89,11 @@ const LoadMainResult: FC = () => {
             )}
           />
         ) : (
-          <div>KHÔNG CÓ GÌ</div>
+          <Box mt={10}>
+            <Text size="large" className="text-slate-500">
+              Bạn chưa có nhóm chia sẻ hóa đơn
+            </Text>
+          </Box>
         )}
       </Box>
       <Box className="fixed bottom-16 right-4">
