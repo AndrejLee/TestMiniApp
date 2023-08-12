@@ -71,13 +71,13 @@ const LoadMainResult: FC = () => {
   return (
     <Page>
       <HeaderBanner />
+      <Divider />
       <Box className="bg-background">
         {listGroup.length > 0 ? (
           <Box m={4}>
             <ListRenderer
               onClick={(item) => handleItemClick(item)}
               items={listGroup}
-              noDivider
               renderLeft={(item) => (
                 <img
                   className="w-10 h-10 rounded-full"

@@ -61,6 +61,7 @@ const ReportList: FC = () => {
       openShareSheet({
         type: "zmp",
         data: {
+          path: "/",
           title: "My Zalo Mini App - HomePage",
           description: "Home page",
           thumbnail: "https://sample-videos.com/img/Sample-jpg-image-50kb.jpg",
