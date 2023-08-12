@@ -48,6 +48,7 @@ export const AddExpense: FC<AddExpenseProps> = ({
       return false;
     }
     clear();
+    return true;
   };
   return (
     <>
@@ -123,8 +124,6 @@ export const AddExpense: FC<AddExpenseProps> = ({
                 fullWidth
                 onClick={() => {
                   addRecord(money, input, date);
-                  setMoney(0);
-                  set;
                 }}
               >
                 Thêm record
