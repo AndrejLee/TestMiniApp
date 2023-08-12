@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from "react";
-import { Box, Header, Text } from "zmp-ui";
+import { Box, Button, Header, Text } from "zmp-ui";
 import {
   useRecoilValue,
   useRecoilValueLoadable,
@@ -111,7 +111,9 @@ export const GroupWelcome: FC = () => {
         <Text size="xLarge">
           {value < 0 ? "Mọi người còn nợ bạn" : "Bạn còn nợ tổng cộng"}
         </Text>
-        <Text size="xLarge">{utilGetMoneyText(value, currency)}</Text>
+        <Text size="xLarge" bold={true}>
+          {utilGetMoneyText(value, currency)}
+        </Text>
         <Text
           className="text-blue-500 underline"
           color="to-blue-600 blue"
@@ -121,6 +123,11 @@ export const GroupWelcome: FC = () => {
         >
           Xem chi tiết {">>>"}
         </Text>
+        {value == 0 ? (
+          <div></div>
+        ) : (
+          <Button size="small">{value > 0 ? "Trả" : "Nhắc"}</Button>
+        )}
       </Box>
     </Box>
   );

@@ -1,12 +1,13 @@
+import { User } from "./user";
+
 export interface Net {
-  id: number;
-  name: string;
-  avatar: string;
-  net: number;
-  status: string;
+  user: User;
+  paid: number;
+  amount: number
+  balance: number,
 }
 
 export interface NetInfo {
-  payed: number;
+  totalAmount: number;
   members: Array<Net>;
 }
