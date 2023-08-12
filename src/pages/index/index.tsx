@@ -79,7 +79,9 @@ const LoadMainResult: FC = () => {
   return (
     <Page>
       <HeaderBanner />
-      <Divider />
+      <Box p={4} className="bg-slate-50">
+        <Text.Title size="xLarge">Bạn muốn chia tiền nhóm với ai?</Text.Title>
+      </Box>
       <Box className="bg-background">
         {listGroup.length > 0 ? (
           <Box m={4}>
