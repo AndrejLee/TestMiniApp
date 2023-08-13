@@ -26,9 +26,11 @@ import { NetWelcome, Welcome } from "../index/welcome";
 import { Group } from "types/group";
 import { Net, NetInfo } from "types/net";
 import { openShareSheet } from "zmp-sdk/apis";
+import { isEmpty, isUndefined } from "lodash";
+import { userDefault0 } from "types/user";
 
 const ReportList: FC = () => {
-  const currentUser = useRecoilValue(currentUserState);
+  var currentUser = useRecoilValue(currentUserState);
   const currentGroup = useRecoilValue(currentSelectedGroup);
   const setData = useSetRecoilState(atomNetState);
   const [currentPayed, setCurrentPayed] = useRecoilState(currentReportPayed);
@@ -82,58 +84,66 @@ const ReportList: FC = () => {
       if (netInfo != null) {
         setCurrentPayed(netInfo.totalAmount);
         return (
-          <Box className="bg-background">
-            <ListRenderer
-              noDivider
-              items={netInfo.members}
-              renderLeft={(item) => (
+          <Box className="bg-white rounded-t-3xl h-full">
+            <Box className="pt-4 pl-4 pr-4">
+              <Text.Title size="normal">Danh sách dư nợ</Text.Title>
+              <hr className="border-slate-500 border-1 mt-2"></hr>
+            </Box>
+
+            {netInfo.members.map((item, index, list) => (
+              <Box flex className="space-x-4 relative" p={3}>
                 <img
-                  className="w-10 h-10 rounded-full"
+                  className="w-15 h-15 pt-2"
                   src={
-                    item.user.avatarUrl ??
-                    "https://img.icons8.com/ios/50/sun.png"
+                    isEmpty(item.user.avatarUrl)
+                      ? "https://img.icons8.com/ios/50/sun.png"
+                      : item.user.avatarUrl
                   }
+                  placeholder="https://img.icons8.com/ios/50/sun.png"
                 />
-              )}
-              renderRight={(item) => (
-                <Box key={item.user.id} flex>
-                  <Box type="left">
-                    <Text.Header>
-                      {item.user.name}{" "}
-                      {item.user.id == currentGroup?.owner.id ? "👑" : ""}
-                    </Text.Header>
-                    <Text
-                      size="small"
-                      className="text-gray overflow-hidden whitespace-nowrap text-ellipsis"
+                <Box key={item.user.id} className="space-y-1" pt={2}>
+                  <Text.Title size="large">
+                    {item.user.name}{" "}
+                    {item.user.id == currentGroup?.owner.id ? "👑" : ""}
+                  </Text.Title>
+                  <Text
+                    size="normal"
+                    className="text-gray overflow-hidden whitespace-nowrap text-ellipsis"
+                  >
+                    {item.balance == 0
+                      ? "sạch nợ"
+                      : item.balance > 0
+                      ? "nợ nhóm"
+                      : "cho mượn"}{" "}
+                    <span
+                      className={
+                        item.balance > 0 ? "text-red-700" : "text-green"
+                      }
                     >
-                      {item.balance == 0
-                        ? "sạch nợ"
-                        : item.balance > 0
-                        ? "nợ nhóm"
-                        : "cho mượn"}{" "}
-                      {utilGetMoneyText(item.balance, "đ")}
-                    </Text>
-                  </Box>
-                  {currentGroup?.owner.id == currentUser?.id &&
-                  item.user.id != currentUser?.id ? (
-                    <Button
-                      className="fixed right-4"
-                      size="small"
-                      disabled={item.balance == 0}
-                      onClick={() => handleOnClick(item.balance)}
-                    >
-                      {item.balance == 0
-                        ? ""
-                        : item.balance > 0
-                        ? "Nhắc"
-                        : "Trả"}
-                    </Button>
-                  ) : (
-                    <div></div>
-                  )}
+                      {utilGetMoneyText(item.balance, "VND")}
+                    </span>
+                  </Text>
                 </Box>
-              )}
-            />
+                {(currentGroup?.owner.id == currentUser?.id ||
+                  isUndefined(currentUser)) &&
+                item.user.id != currentUser?.id ? (
+                  <button
+                    className={
+                      "right-4 align-middle absolute top-7 w-16 h-8 font-semibold rounded-full" +
+                      (true
+                        ? " bg-blue-500 text-white"
+                        : " bg-yellow-200 text-amber-700")
+                    }
+                    disabled={item.balance == 0}
+                    onClick={() => handleOnClick(item.balance)}
+                  >
+                    {item.balance == 0 ? "" : item.balance > 0 ? "Nhắc" : "Trả"}
+                  </button>
+                ) : (
+                  <div></div>
+                )}
+              </Box>
+            ))}
           </Box>
         );
       } else {

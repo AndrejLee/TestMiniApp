@@ -62,6 +62,33 @@ export const Welcome: FC<{
   );
 };
 
+export const GroupHeader: FC = () => {
+  const group = useRecoilValue(currentSelectedGroup);
+  return (
+    <Box
+      flex
+      alignItems="center"
+      className="space-x-2 pr-20"
+      marginWidth={100}
+      p={2}
+    >
+      <img
+        className="w-10 h-10 rounded -inset left-5"
+        src={getGroupIcon(group?.category ?? "COUPLE")}
+      />
+      <Text.Title
+        size="xLarge"
+        className=" whitespace-nowrap overflow-hidden overflow-ellipsis"
+      >
+        {group?.name ?? "Unknown"}
+      </Text.Title>
+      <Text className="text-blue-700 font-semibold absolute right-8">
+        Chia sẻ
+      </Text>
+    </Box>
+  );
+};
+
 export const GroupWelcome: FC = () => {
   const currency = "đ";
   const navigate = useNavigate();
@@ -105,23 +132,7 @@ export const GroupWelcome: FC = () => {
 
   return (
     <Box className="space-x-2 bg-slate-100" m={3}>
-      <Box
-        flex
-        alignItems="center"
-        className="space-x-2"
-        marginWidth={100}
-        p={2}
-      >
-        <img
-          className="w-10 h-10 rounded -inset left-5"
-          src={cate.icon ?? "https://img.icons8.com/ios/50/hug.png"}
-        />
-        <Text.Title size="xLarge"> {group?.name ?? "Unknown"} </Text.Title>
-        <Text className="text-blue-700 font-semibold fixed right-8">
-          Chia sẻ
-        </Text>
-      </Box>
-
+      <GroupHeader />
       <Box className="bg-blue-50 h-32 rounded-xl" p={4} flex>
         <Box className="space-y-2">
           <Text size={"xLarge"}>
@@ -149,7 +160,7 @@ export const GroupWelcome: FC = () => {
             </Button>
           )}
         </Box>
-        <img className="fixed right-8" src={groupImg}></img>
+        <img className="absolute right-8" src={groupImg}></img>
       </Box>
     </Box>
   );
@@ -164,31 +175,15 @@ export const NetWelcome: FC<{
   const group = useRecoilValue(currentSelectedGroup);
   return (
     <Box className="space-x-2 bg-slate-100" m={3}>
-      <Box
-        flex
-        alignItems="center"
-        className="space-x-2"
-        marginWidth={100}
-        p={2}
-      >
-        <img
-          className="w-10 h-10 rounded -inset left-5"
-          src={getGroupIcon(group?.category ?? "OTHER")}
-        />
-        <Text.Title size="xLarge"> {group?.name ?? "Unknown"} </Text.Title>
-        <Text className="text-blue-700 font-semibold fixed right-8">
-          Chia sẻ
-        </Text>
-      </Box>
-
+      <GroupHeader />
       <Box className="bg-blue-50 h-32 rounded-xl" p={4} flex>
         <Box className="space-y-2">
           <Text.Title size={"xLarge"}>Tổng chi</Text.Title>
-          <Text.Title size="xLarge" className="font-extrabold">
+          <Text.Title size="xLarge" className="text-red-700">
             {utilGetMoneyText(payed, currency)}
           </Text.Title>
         </Box>
-        <img className="fixed right-8" src={billImg}></img>
+        <img className="absolute right-8" src={billImg}></img>
       </Box>
     </Box>
   );

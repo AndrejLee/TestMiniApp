@@ -438,10 +438,7 @@ export const currentUserState = selector<User | null>({
 
 export const currentListGroup = atom<Group[]>({
   key: "currentListGroup",
-  default: [
-    <Group>{ id: 0, name: "Xóm nhỏ vui cùng xóm lớn", category: "HOME" },
-    <Group>{ id: 2, name: "Xóm bự vui cùng xóm lớn" },
-  ],
+  default: [groupDefault],
 });
 
 export const currentSelectedGroup = atom<Group | null>({

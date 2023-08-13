@@ -165,10 +165,10 @@ const CreateGroup: FC = () => {
   };
 
   return (
-    <Page>
+    <Page className="h-full bg-white">
       <Header title="Tạo nhóm chia tiền" showBackIcon={true} />
       <Box pr={2} pl={2} pt={4} pb={4} className="justify-center flex bg-white">
-        <Text.Header>Bạn muốn chia tiền với ai?</Text.Header>
+        <Text.Title size="large">Bạn muốn chia tiền với ai?</Text.Title>
       </Box>
       <Box
         p={4}
@@ -200,9 +200,10 @@ const CreateGroup: FC = () => {
 
       <Box p={4} className="bg-white">
         <Select
+          closeOnSelect
           placeholder="Mục đích"
           multiple={false}
-          defaultValue={[]}
+          defaultValue={"OTHER"}
           onChange={(value) => onGroupCategoryChange(value)}
         >
           {cates.map((cate) => (
@@ -215,7 +216,6 @@ const CreateGroup: FC = () => {
           Mời bạn
         </Button>
       </Box>
-      <Divider />
     </Page>
   );
 };
