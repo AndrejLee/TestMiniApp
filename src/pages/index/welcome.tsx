@@ -25,6 +25,9 @@ import {
   GroupCategories,
   GroupCateId,
 } from "types/category";
+import billImg from "./bill.png";
+import groupImg from "./group.png";
+import { isEmpty } from "lodash";
 
 export const Welcome: FC<{
   shouldBack?: boolean;
@@ -114,6 +117,9 @@ export const GroupWelcome: FC = () => {
           src={cate.icon ?? "https://img.icons8.com/ios/50/hug.png"}
         />
         <Text.Title size="xLarge"> {group?.name ?? "Unknown"} </Text.Title>
+        <Text className="text-blue-700 font-semibold fixed right-8">
+          Chia sẻ
+        </Text>
       </Box>
 
       <Box className="bg-blue-50 h-32 rounded-xl" p={4} flex>
@@ -143,8 +149,7 @@ export const GroupWelcome: FC = () => {
             </Button>
           )}
         </Box>
-
-        <img className="fixed right-8" src={"/docs/resources/group.png"}></img>
+        <img className="fixed right-8" src={groupImg}></img>
       </Box>
     </Box>
   );
@@ -155,7 +160,7 @@ export const NetWelcome: FC<{
   payed: number;
   currency?: string;
 }> = ({ name, payed, currency }) => {
-  if (!currency) currency = "đ";
+  if (!currency) currency = "VND";
   const group = useRecoilValue(currentSelectedGroup);
   return (
     <Box className="space-x-2 bg-slate-100" m={3}>
@@ -167,16 +172,23 @@ export const NetWelcome: FC<{
         p={2}
       >
         <img
-          className="w-10 h-10 rounded border-inset left-5"
+          className="w-10 h-10 rounded -inset left-5"
           src={getGroupIcon(group?.category ?? "OTHER")}
         />
-        <Text.Title size="xLarge"> {name} </Text.Title>
-      </Box>
-      <Box className="bg-blue-100 rounded-xl" p={3}>
-        <Text size="xLarge">Tổng chi</Text>
-        <Text size="xLarge" bold={true} className="text-red-400">
-          {utilGetMoneyText(payed, currency)}
+        <Text.Title size="xLarge"> {group?.name ?? "Unknown"} </Text.Title>
+        <Text className="text-blue-700 font-semibold fixed right-8">
+          Chia sẻ
         </Text>
+      </Box>
+
+      <Box className="bg-blue-50 h-32 rounded-xl" p={4} flex>
+        <Box className="space-y-2">
+          <Text.Title size={"xLarge"}>Tổng chi</Text.Title>
+          <Text.Title size="xLarge" className="font-extrabold">
+            {utilGetMoneyText(payed, currency)}
+          </Text.Title>
+        </Box>
+        <img className="fixed right-8" src={billImg}></img>
       </Box>
     </Box>
   );

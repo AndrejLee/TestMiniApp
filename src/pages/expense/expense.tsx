@@ -53,30 +53,54 @@ const ExpenseList: FC = () => {
     case "hasError":
       return <p>Error loading data</p>;
     case "hasValue":
+      console.log(asyncDataLoadable);
       const expenses = asyncDataLoadable.contents;
+      console.log(expenses);
+      if (expenses.length <= 0)
+        return (
+          <Text
+            size="xLarge"
+            className="w-full text-center p-10 text-slate-400"
+          >
+            Nhóm bạn chưa có chi tiêu nào
+          </Text>
+        );
       return (
-        <Box className="bg-background">
-          <ListRenderer
-            noDivider
-            items={expenses}
-            renderLeft={(item) => (
+        <Box className="">
+          {expenses.map((item, index, list) => (
+            <Box flex className="space-x-4" p={5}>
               <img
-                className="w-10 h-10 rounded-full"
+                className="w-15 h-15 pt-2"
                 src={getExpenseIcon(item.category)}
               />
-            )}
-            renderRight={(item) => (
-              <Box key={item.id}>
-                <Text.Header>{getMoneyText(item)}</Text.Header>
+              <Box key={item.id} className="space-y-1" pt={2}>
+                <Text.Title size="large">{item.title}</Text.Title>
                 <Text
-                  size="small"
+                  size="normal"
                   className="text-gray overflow-hidden whitespace-nowrap text-ellipsis"
                 >
-                  {getDecriptionText(item)}
+                  Trả bởi {item.user.name}
                 </Text>
               </Box>
-            )}
-          />
+              <Box
+                className="fixed right-0 space-y-1"
+                pt={2}
+                pr={6}
+                justifyContent="flex-end"
+                alignContent="flex-end"
+              >
+                <Text.Title
+                  size="large"
+                  className="text-right text-red-700 w-full"
+                >
+                  {getMoneyText(item)}
+                </Text.Title>
+                <Text size="normal" className="text-gray text-right">
+                  {item.date.getDay()}/{item.date.getMonth()}
+                </Text>
+              </Box>
+            </Box>
+          ))}
         </Box>
       );
     default:
@@ -93,8 +117,9 @@ const ExpensePage: FC<ExpensePageProps> = ({ group }) => {
     <Page>
       <Welcome shouldBack={true} />
       <GroupWelcome />
-      <Divider />
-      <ExpenseList />
+      <Box className="rounded-t-3xl h-full bg-white">
+        <ExpenseList />
+      </Box>
       <AddExpense group={group}>
         {({ open }) => (
           <Box className="fixed bottom-6 right-4">

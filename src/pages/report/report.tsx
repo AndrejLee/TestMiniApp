@@ -158,7 +158,6 @@ const ReportPage: FC<ExpensePageProps> = ({ group }) => {
       <NetWelcome
         name={currentGroup == null ? "" : currentGroup.name}
         payed={currentPayed}
-        currency="đ"
       />
       <Divider />
       <ReportList />

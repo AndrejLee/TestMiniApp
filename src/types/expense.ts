@@ -1,6 +1,6 @@
 import { round, toNumber } from "lodash";
 import { ExpenseCateId } from "./category";
-import { User } from "./user";
+import { groupMembersDefault, User, userDefault, userDefault0 } from "./user";
 
 export interface Expense {
   id: number;
@@ -13,6 +13,19 @@ export interface Expense {
   createdBy: User;
   participant: Array<User>;
 }
+
+export const expensesDefault = [
+  <Expense>{
+    id: 0,
+    amount: 10000,
+    category: "BEAUTY",
+    title: "Son",
+    date: new Date(),
+    user: userDefault0,
+    createdBy: userDefault0,
+    participant: groupMembersDefault,
+  },
+];
 
 export function getMoneyText(expense: Expense): string {
   return utilGetMoneyText(expense.amount, "VND");

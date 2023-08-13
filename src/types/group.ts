@@ -1,5 +1,5 @@
 import { GroupCateId } from "./category";
-import { User } from "./user";
+import { groupMembersDefault, User, userDefault0 } from "./user";
 
 export interface Group {
   id: number;
@@ -10,3 +10,13 @@ export interface Group {
   owner: User;
   members: Array<User>;
 }
+
+export const groupDefault = <Group>{
+  id: 0,
+  name: "Hackathon",
+  numberOfMembers: groupMembersDefault.length,
+  category: "TRIP",
+  status: "Unknown",
+  owner: userDefault0,
+  members: groupMembersDefault,
+};

@@ -17,8 +17,8 @@ import { Category, CategoryId } from "types/category";
 import { Product } from "types/product";
 import { Cart } from "types/cart";
 import { Notification } from "types/notification";
-import { Group } from "types/group";
-import { Expense } from "types/expense";
+import { Group, groupDefault } from "types/group";
+import { Expense, expensesDefault } from "types/expense";
 import { calculateDistance } from "utils/location";
 import { Store } from "types/delivery";
 import { calcFinalPrice } from "utils/product";
@@ -26,7 +26,8 @@ import { wait } from "utils/async";
 import { firebaseDB } from "app";
 import { User } from "types/user";
 import GroupPage from "pages/group/group";
-import { Net, NetInfo } from "types/net";
+import { Net, NetInfo, netInfoDefault } from "types/net";
+import { isEmpty, isUndefined } from "lodash";
 
 export const userState = selector({
   key: "user",
@@ -191,6 +192,10 @@ export const expenseState = selector<Expense[]>({
   key: "customSelectorExpense",
   get: async ({ get }) => {
     const data = get(atomExpenseState);
+    console.log(data);
+    if (isUndefined(data) || !data || isEmpty(data)) {
+      return expensesDefault;
+    }
     return data;
   },
   set: ({ set, get }: any, newValue: any) => {},
@@ -205,6 +210,9 @@ export const netState = selector<NetInfo | null>({
   key: "customSelector",
   get: async ({ get }) => {
     const data = get(atomNetState);
+    if (!data || isEmpty(data)) {
+      return netInfoDefault;
+    }
     return data;
   },
   set: ({ set, get }: any, newValue: any) => {},
@@ -438,7 +446,7 @@ export const currentListGroup = atom<Group[]>({
 
 export const currentSelectedGroup = atom<Group | null>({
   key: "currentSelectedGroup",
-  default: null,
+  default: groupDefault,
 });
 
 export const newGroupTitleName = atom({
