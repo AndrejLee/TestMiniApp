@@ -193,9 +193,6 @@ export const expenseState = selector<Expense[]>({
   get: async ({ get }) => {
     const data = get(atomExpenseState);
     console.log(data);
-    if (isUndefined(data) || !data || isEmpty(data)) {
-      return expensesDefault;
-    }
     return data;
   },
   set: ({ set, get }: any, newValue: any) => {},

@@ -27,6 +27,11 @@ export const expensesDefault = [
   },
 ];
 
+export function getDdmm(expense: Expense): string {
+  let date = new Date(expense.date);
+  return date.getDate() + "/" + date.getMonth();
+}
+
 export function getMoneyText(expense: Expense): string {
   return utilGetMoneyText(expense.amount, "VND");
 }

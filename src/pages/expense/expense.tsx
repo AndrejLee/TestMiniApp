@@ -15,7 +15,7 @@ import {
   expenseState,
   netState,
 } from "../../state";
-import { getMoneyText, getDecriptionText } from "../../types/expense";
+import { getMoneyText, getDecriptionText, getDdmm } from "../../types/expense";
 import { Box, Button, Header, Page, Text } from "zmp-ui";
 import { Divider } from "../../components/divider";
 import { GroupWelcome, Welcome } from "../index/welcome";
@@ -53,10 +53,8 @@ const ExpenseList: FC = () => {
     case "hasError":
       return <p>Error loading data</p>;
     case "hasValue":
-      console.log(asyncDataLoadable);
       const expenses = asyncDataLoadable.contents;
-      console.log(expenses);
-      if (expenses.length <= 0)
+      if (expenses.length <= 0) {
         return (
           <Text
             size="xLarge"
@@ -65,6 +63,8 @@ const ExpenseList: FC = () => {
             Nhóm bạn chưa có chi tiêu nào
           </Text>
         );
+      }
+      console.log(expenses);
       return (
         <Box className="">
           {expenses.map((item, index, list) => (
@@ -96,7 +96,7 @@ const ExpenseList: FC = () => {
                   {getMoneyText(item)}
                 </Text.Title>
                 <Text size="normal" className="text-gray text-right">
-                  {item.date.getDay()}/{item.date.getMonth()}
+                  {getDdmm(item)}
                 </Text>
               </Box>
             </Box>

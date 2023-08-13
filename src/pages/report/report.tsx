@@ -93,13 +93,12 @@ const ReportList: FC = () => {
             {netInfo.members.map((item, index, list) => (
               <Box flex className="space-x-4 relative" p={3}>
                 <img
-                  className="w-15 h-15 pt-2"
+                  className="w-15 h-15 rounded-full"
                   src={
                     isEmpty(item.user.avatarUrl)
                       ? "https://img.icons8.com/ios/50/sun.png"
                       : item.user.avatarUrl
                   }
-                  placeholder="https://img.icons8.com/ios/50/sun.png"
                 />
                 <Box key={item.user.id} className="space-y-1" pt={2}>
                   <Text.Title size="large">
