@@ -11,7 +11,7 @@ import {
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { Box, Button, Input, Select, Text } from "zmp-ui";
 import { Group } from "types/group";
-import { toNumber } from "lodash";
+import { isArray, isUndefined, toNumber } from "lodash";
 import { hideKeyboard, onCallbackData, showToast } from "zmp-sdk";
 import { useNavigate } from "react-router";
 import { Expense } from "types/expense";
@@ -22,6 +22,8 @@ import {
   Category,
 } from "types/category";
 import { utilGetNumberText, utilGetNumberFromText } from "types/expense";
+import { SelectValueType } from "zmp-ui/select";
+import { string } from "prop-types";
 
 export interface AddExpenseData {
   money: number;
@@ -30,16 +32,12 @@ export interface AddExpenseData {
 }
 
 export interface AddExpenseProps {
-  group?: Group;
+  group: Group;
   selected?: AddExpenseData;
   children: (methods: { open: () => void; close: () => void }) => ReactNode;
 }
 
-export const AddExpense: FC<AddExpenseProps> = ({
-  children,
-  group,
-  selected,
-}) => {
+export const AddExpense: FC<AddExpenseProps> = ({ children, group }) => {
   const [money, setMoney] = useState(0);
   const [input, setInput] = useState("");
   const [visible, setVisible] = useState(true);
@@ -59,6 +57,29 @@ export const AddExpense: FC<AddExpenseProps> = ({
     "OTHER",
   ];
 
+  const onMemberChange = (
+    partners: SelectValueType[] | SelectValueType | undefined
+  ) => {
+    if (isUndefined(partners)) {
+      return;
+    }
+    if (isArray(partners)) {
+      setParners(partners);
+    } else {
+      setParners([partners]);
+    }
+  };
+
+  const allMemberIds = () => {
+    var temp: Array<string> = [];
+    for (let mem of group.members) {
+      temp.push(mem.id);
+    }
+    return temp;
+  };
+
+  const [partners, setParners] = useState(allMemberIds());
+
   const currentDate = () => {
     const cdate = new Date();
     var text =
@@ -77,13 +98,15 @@ export const AddExpense: FC<AddExpenseProps> = ({
     setMoney(0);
     setInput("");
     setDdmm(currentDate());
+    setParners(allMemberIds());
   };
 
   const addRecord = (
     money: number,
     msg: string,
     date: Date,
-    cate: ExpenseCateId
+    cate: ExpenseCateId,
+    partners: Array<string>
   ) => {
     if (money <= 0) {
       showToast({
@@ -107,7 +130,7 @@ export const AddExpense: FC<AddExpenseProps> = ({
             date: date,
             category: cate,
             userId: currentUser.id,
-            participants: currentGroup.members.map((member) => member.id),
+            participants: partners,
           }),
         }
       )
@@ -201,19 +224,30 @@ export const AddExpense: FC<AddExpenseProps> = ({
                   className="w-11 h-11"
                   src="https://img.icons8.com/ios/50/conference-call--v1.png"
                 />
-                <Input
-                  value="Tất cả thành viên"
-                  clearable
-                  allowClear
-                  disabled
-                />
+                <Select
+                  id="temp"
+                  placeholder="Mục đích"
+                  multiple={false}
+                  defaultValue={[]}
+                  value={partners}
+                  onChange={(value) => {
+                    onMemberChange(value);
+                    hideKeyboard();
+                  }}
+                  multiple
+                >
+                  {group.members.map((item) => (
+                    <Option value={item.id} title={item.name} />
+                  ))}
+                </Select>
               </Box>
+
               <Button
                 variant="primary"
                 type="highlight"
                 fullWidth
                 onClick={() => {
-                  addRecord(money, input, new Date(ddmm), exCate);
+                  addRecord(money, input, new Date(ddmm), exCate, partners);
                 }}
               >
                 Thêm chi tiêu

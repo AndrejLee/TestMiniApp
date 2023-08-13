@@ -20,7 +20,7 @@ import { Box, Button, Header, Page, Text } from "zmp-ui";
 import { Divider } from "../../components/divider";
 import { GroupWelcome, Welcome } from "../index/welcome";
 import { AddExpense } from "./add";
-import { Group } from "types/group";
+import { Group, groupDefault } from "types/group";
 import { getExpenseIcon } from "types/category";
 
 const ExpenseList: FC = () => {
@@ -120,7 +120,7 @@ const ExpensePage: FC<ExpensePageProps> = ({ group }) => {
       <Box className="rounded-t-3xl h-full bg-white">
         <ExpenseList />
       </Box>
-      <AddExpense group={group}>
+      <AddExpense group={group ?? groupDefault}>
         {({ open }) => (
           <Box className="fixed bottom-6 right-4">
             <Button type="highlight" size="large" onClick={open}>
