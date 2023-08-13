@@ -18,6 +18,7 @@ import { showToast, openProfilePicker } from "zmp-sdk/apis";
 import { Page, Header, Box, Text, Input, Select, Button } from "zmp-ui";
 import { SelectValueType } from "zmp-ui/select";
 import { GroupCategories, GroupCateId } from "types/category";
+import { hideKeyboard } from "zmp-sdk";
 
 const CreateGroup: FC = () => {
   const currentUser = useRecoilValue(currentUserState);
@@ -35,7 +36,7 @@ const CreateGroup: FC = () => {
   );
 
   const onGroupCategoryChange = (category: SelectValueType[]) => {
-    setCategory(category.toString());
+    hideKeyboard;
     console.log(category.toString());
   };
 
