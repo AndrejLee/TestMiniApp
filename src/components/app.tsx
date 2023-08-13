@@ -17,7 +17,7 @@ const MyApp = () => {
         <App>
           <SnackbarProvider>
             <ZMPRouter>
-              <Layout/>
+              <Layout />
             </ZMPRouter>
           </SnackbarProvider>
         </App>

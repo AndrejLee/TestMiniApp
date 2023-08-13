@@ -19,7 +19,12 @@ import { getConfig } from "utils/config";
 import { utilGetMoneyText } from "types/expense";
 import { useNavigate } from "react-router";
 import { Divider } from "components/divider";
-import { GroupCate, GroupCategories, GroupCateId } from "types/category";
+import {
+  getGroupIcon,
+  GroupCate,
+  GroupCategories,
+  GroupCateId,
+} from "types/category";
 
 export const Welcome: FC<{
   shouldBack?: boolean;
@@ -145,8 +150,7 @@ export const NetWelcome: FC<{
   currency?: string;
 }> = ({ name, payed, currency }) => {
   if (!currency) currency = "đ";
-  const user = useRecoilValueLoadable(userState);
-  const navigate = useNavigate();
+  const group = useRecoilValue(currentSelectedGroup);
   return (
     <Box className="space-x-2 bg-slate-100" m={3}>
       <Box
@@ -158,7 +162,7 @@ export const NetWelcome: FC<{
       >
         <img
           className="w-10 h-10 rounded border-inset left-5"
-          src="https://img.icons8.com/ios/50/hug.png"
+          src={getGroupIcon(group?.category ?? "OTHER")}
         />
         <Text.Title size="xLarge"> {name} </Text.Title>
       </Box>

@@ -211,14 +211,14 @@ export const netState = selector<NetInfo | null>({
 });
 
 export const currentReportPayed = atom<number>({
- key: "currentReportPayed",
- default: 0
-})
+  key: "currentReportPayed",
+  default: 0,
+});
 
 export const currentBalanceInExpense = atom<number>({
   key: "currentBalanceInExpense",
-  default: 0
-})
+  default: 0,
+});
 
 export const keywordState = atom({
   key: "keyword",

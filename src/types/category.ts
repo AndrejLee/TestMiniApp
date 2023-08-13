@@ -117,3 +117,9 @@ export const GroupCategories = {
     icon: "https://img.icons8.com/ios/50/connection-status-off.png",
   },
 };
+
+export function getGroupIcon(cateId: GroupCateId) {
+  if (isUndefined(cateId)) return GroupCategories.OTHER.icon;
+  let temp = GroupCategories[cateId].icon;
+  return temp ?? GroupCategories.OTHER.icon;
+}

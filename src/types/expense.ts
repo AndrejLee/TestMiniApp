@@ -1,4 +1,4 @@
-import { toNumber } from "lodash";
+import { round, toNumber } from "lodash";
 import { ExpenseCateId } from "./category";
 import { User } from "./user";
 
@@ -30,6 +30,7 @@ export function utilGetNumberText(money: number): string {
   if (money < 0) {
     money = -money;
   }
+  money = round(money);
   let text = money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   return text;
 }

@@ -8,13 +8,14 @@ import {
   currentUserState,
 } from "state";
 import { closeApp } from "zmp-sdk";
-import { ListRenderer } from "components/list-renderer";
+import { GroupListRenderer, ListRenderer } from "components/list-renderer";
 import { useNavigate } from "react-router";
 import { Divider } from "components/divider";
 import { HeaderBanner } from "./headerBanner";
 import { Group } from "types/group";
-import { GroupCategories, GroupCate, GroupCateId } from "types/category";
+import { GroupCategories, GroupCateId, getGroupIcon } from "types/category";
 import { isUndefined } from "lodash";
+import { TitleTextSize } from "zmp-ui/text";
 
 const HomePage: React.FunctionComponent = () => {
   return (
@@ -27,6 +28,12 @@ const HomePage: React.FunctionComponent = () => {
       </Box>
     </Page>
   );
+};
+
+const GroupCell: FC<{ itemp: Group }> = (itemp) => {
+  let temp = itemp;
+  console.log(itemp);
+  return <Text></Text>;
 };
 
 const LoadMainResult: FC = () => {
@@ -79,30 +86,22 @@ const LoadMainResult: FC = () => {
   return (
     <Page>
       <HeaderBanner />
-      <Box p={4} className="bg-slate-50">
-        <Text.Title size="xLarge">Bạn muốn chia tiền nhóm với ai?</Text.Title>
+      <Box m={8} className="">
+        <Text.Title size="xLarge" className="">
+          Bạn muốn chia tiền nhóm với ai?
+        </Text.Title>
       </Box>
       <Box className="bg-background">
+        <Box></Box>
         {listGroup.length > 0 ? (
           <Box m={4}>
-            <ListRenderer
+            <GroupListRenderer
               onClick={(item) => handleItemClick(item)}
               items={listGroup}
-              renderLeft={(item) => (
-                <img
-                  className="w-10 h-10 rounded-full"
-                  src={getIcon(item.category)}
-                />
-              )}
-              renderRight={(item) => (
-                <Box key={item.id} mt={2}>
-                  <Text.Header>{item.name}</Text.Header>
-                </Box>
-              )}
             />
           </Box>
         ) : (
-          <Box mt={10}>
+          <Box mt={10} alignContent="center">
             <Text size="large" className="text-slate-500">
               Bạn chưa có nhóm chia sẻ hóa đơn
             </Text>
