@@ -13,8 +13,6 @@ import { Box, Button, Input, Select, Text } from "zmp-ui";
 import { Group } from "types/group";
 import { isArray, isUndefined, toNumber } from "lodash";
 import { hideKeyboard, onCallbackData, showToast } from "zmp-sdk";
-import { useNavigate } from "react-router";
-import { Expense } from "types/expense";
 import {
   ExpenseCateId,
   ExpenseCategories,
@@ -40,7 +38,7 @@ export interface AddExpenseProps {
 export const AddExpense: FC<AddExpenseProps> = ({ children, group }) => {
   const [money, setMoney] = useState(0);
   const [input, setInput] = useState("");
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
   const currentUser = useRecoilValue(currentUserState);
   const currentGroup = useRecoilValue(currentSelectedGroup);
   const [listExpense, setListExpense] = useRecoilState(atomExpenseState);
@@ -184,7 +182,9 @@ export const AddExpense: FC<AddExpenseProps> = ({ children, group }) => {
                   defaultValue={exCate}
                   value={exCate}
                   onChange={(value) => {
-                    setExCate(value);
+                    if (!isUndefined(value)) {
+                      setExCate(value);
+                    }
                     hideKeyboard();
                   }}
                   closeOnSelect
