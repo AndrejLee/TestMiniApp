@@ -172,7 +172,6 @@ const ReportPage: FC<ExpensePageProps> = ({ group }) => {
         name={currentGroup == null ? "" : currentGroup.name}
         payed={currentPayed}
       />
-      <Divider />
       <ReportList />
     </Page>
   );
