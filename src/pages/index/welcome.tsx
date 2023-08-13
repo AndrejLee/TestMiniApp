@@ -116,29 +116,35 @@ export const GroupWelcome: FC = () => {
         <Text.Title size="xLarge"> {group?.name ?? "Unknown"} </Text.Title>
       </Box>
 
-      <Box className="bg-blue-100 rounded-xl" p={3}>
-        <Text size="xLarge">
-          {value < 0 ? "Mọi người còn nợ bạn" : "Bạn còn nợ tổng cộng"}
-        </Text>
-        <Text size="xLarge" bold={true}>
-          {utilGetMoneyText(value, currency)}
-        </Text>
-        <Text
-          className="text-blue-500"
-          color="to-blue-600 blue"
-          onClick={() => {
-            navigate("/report");
-          }}
-        >
-          Xem chi tiết {">"}
-        </Text>
-        {value == 0 ? (
-          <div></div>
-        ) : (
-          <Button className="mt-2" size="small">
-            {value > 0 ? "Trả" : "Nhắc"}
-          </Button>
-        )}
+      <Box className="bg-blue-50 h-32 rounded-xl" p={4} flex>
+        <Box className="space-y-2">
+          <Text size={"xLarge"}>
+            {value < 0 ? "Mọi người còn nợ bạn" : "Bạn còn nợ tổng cộng"}
+          </Text>
+          <Text size="xLarge" bold={true}>
+            {utilGetMoneyText(value, currency)}
+          </Text>
+          <Text
+            size="large"
+            bold
+            className="text-blue-700"
+            color="to-blue-600 blue"
+            onClick={() => {
+              navigate("/report");
+            }}
+          >
+            Xem chi tiết {">"}
+          </Text>
+          {value == 0 ? (
+            <div></div>
+          ) : (
+            <Button className="mt-2" size="small">
+              {value > 0 ? "Trả" : "Nhắc"}
+            </Button>
+          )}
+        </Box>
+
+        <img className="fixed right-8" src={"/docs/resources/group.png"}></img>
       </Box>
     </Box>
   );
