@@ -6,6 +6,7 @@ import {
   cartState,
   currentSelectedGroup,
   currentUserState,
+  userState,
 } from "state";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { Box, Button, Input, Select, Text } from "zmp-ui";
@@ -14,7 +15,12 @@ import { toNumber } from "lodash";
 import { hideKeyboard, onCallbackData, showToast } from "zmp-sdk";
 import { useNavigate } from "react-router";
 import { Expense } from "types/expense";
-import { ExpenseCateId, ExpenseCategories } from "types/category";
+import {
+  ExpenseCateId,
+  ExpenseCategories,
+  getExpenseIcon,
+  Category,
+} from "types/category";
 import { utilGetNumberText, utilGetNumberFromText } from "types/expense";
 
 export interface AddExpenseData {
@@ -36,14 +42,11 @@ export const AddExpense: FC<AddExpenseProps> = ({
 }) => {
   const [money, setMoney] = useState(0);
   const [input, setInput] = useState("");
-  const [date, setDate] = useState(new Date());
-  const [visible, setVisible] = useState(false);
-  const [quantity, setQuantity] = useState(1);
-  const setCart = useSetRecoilState(cartState);
+  const [visible, setVisible] = useState(true);
   const currentUser = useRecoilValue(currentUserState);
   const currentGroup = useRecoilValue(currentSelectedGroup);
   const [listExpense, setListExpense] = useRecoilState(atomExpenseState);
-  const [exCate, setExCate] = useState("OTHERR");
+  const [exCate, setExCate] = useState(ExpenseCategories.OTHER.id);
   const cates: Array<ExpenseCateId> = [
     "OOD",
     "ACCOMMODATION",
@@ -56,15 +59,32 @@ export const AddExpense: FC<AddExpenseProps> = ({
     "OTHER",
   ];
 
+  const currentDate = () => {
+    const cdate = new Date();
+    var text =
+      cdate.getFullYear() +
+      (cdate.getMonth() < 9 ? "-0" : "-") +
+      (cdate.getMonth() + 1) +
+      (cdate.getDate() > 9 ? "-" : "-0") +
+      cdate.getDate();
+    return text;
+  };
+
+  const [ddmm, setDdmm] = useState(currentDate());
+
   const clear = () => {
     setVisible(false);
     setMoney(0);
     setInput("");
-    setDate(new Date());
+    setDdmm(currentDate());
   };
 
-  const addRecord = (money: number, msg: string, date: Date) => {
-    console.log({ money });
+  const addRecord = (
+    money: number,
+    msg: string,
+    date: Date,
+    cate: ExpenseCateId
+  ) => {
     if (money <= 0) {
       showToast({
         message: "Bạn chưa nhập số tiền kìa",
@@ -85,7 +105,7 @@ export const AddExpense: FC<AddExpenseProps> = ({
             amount: money,
             title: msg,
             date: date,
-            category: exCate,
+            category: cate,
             userId: currentUser.id,
             participants: currentGroup.members.map((member) => member.id),
           }),
@@ -134,19 +154,17 @@ export const AddExpense: FC<AddExpenseProps> = ({
                 />
               </Box>
               <Box flex className="space-x-4">
-                <img
-                  className="w-11 h-11"
-                  src="https://img.icons8.com/ios/50/goodnotes.png"
-                />
+                <img className="w-11 h-11" src={getExpenseIcon(exCate)} />
                 <Select
                   placeholder="Mục đích"
                   multiple={false}
-                  defaultValue={[]}
+                  defaultValue={exCate}
                   value={exCate}
                   onChange={(value) => {
                     setExCate(value);
                     hideKeyboard();
                   }}
+                  closeOnSelect
                 >
                   {cates.map((cate) => (
                     <Option value={cate} title={ExpenseCategories[cate].name} />
@@ -171,13 +189,11 @@ export const AddExpense: FC<AddExpenseProps> = ({
                   className="w-11 h-11"
                   src="https://img.icons8.com/ios/50/calendar--v1.png"
                 />
-                <Input
-                  placeholder={date.toDateString()}
-                  clearable
-                  allowClear
-                  defaultValue={date.toDateString()}
-                  value={date.toDateString()}
-                  disabled
+                <input
+                  className="h=11 pl-2"
+                  type="date"
+                  value={ddmm}
+                  onChange={(e) => setDdmm(e.target.value)}
                 />
               </Box>
               <Box flex className="space-x-4">
@@ -193,15 +209,14 @@ export const AddExpense: FC<AddExpenseProps> = ({
                 />
               </Box>
               <Button
-                disabled={!quantity}
                 variant="primary"
                 type="highlight"
                 fullWidth
                 onClick={() => {
-                  addRecord(money, input, date, exCate);
+                  addRecord(money, input, new Date(ddmm), exCate);
                 }}
               >
-                Thêm record
+                Thêm chi tiêu
               </Button>
             </Box>
           }
