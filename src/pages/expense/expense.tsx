@@ -79,7 +79,9 @@ const ExpenseList: FC = () => {
                 src={getExpenseIcon(item.category)}
               />
               <Box key={item.id} className="space-y-1 w-full" pt={2}>
-                <Text.Title size="large">{item.title}</Text.Title>
+                <Text.Title size="large">
+                  {item.title.length > 0 ? item.title : "-"}
+                </Text.Title>
                 <Text
                   size="normal"
                   className="text-gray overflow-hidden whitespace-nowrap text-ellipsis"
