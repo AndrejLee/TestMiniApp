@@ -15,7 +15,12 @@ import {
   expenseState,
   netState,
 } from "../../state";
-import { getMoneyText, getDecriptionText, getDdmm } from "../../types/expense";
+import {
+  getMoneyText,
+  getDecriptionText,
+  getDdmm,
+  expensesDefault,
+} from "../../types/expense";
 import { Box, Button, Header, Page, Text } from "zmp-ui";
 import { Divider } from "../../components/divider";
 import { GroupWelcome, Welcome } from "../index/welcome";
@@ -58,7 +63,7 @@ const ExpenseList: FC = () => {
         return (
           <Text
             size="xLarge"
-            className="w-full text-center p-10 text-slate-400"
+            className="w-full text-center p-10 pt-20 text-slate-400"
           >
             Nhóm bạn chưa có chi tiêu nào
           </Text>
@@ -73,25 +78,24 @@ const ExpenseList: FC = () => {
                 className="w-15 h-15 pt-2"
                 src={getExpenseIcon(item.category)}
               />
-              <Box key={item.id} className="space-y-1" pt={2}>
+              <Box key={item.id} className="space-y-1 w-full" pt={2}>
                 <Text.Title size="large">{item.title}</Text.Title>
                 <Text
                   size="normal"
                   className="text-gray overflow-hidden whitespace-nowrap text-ellipsis"
                 >
-                  Trả bởi {item.user.name}
+                  Trả bởi <span className="text-black">{item.user.name}</span>
                 </Text>
               </Box>
               <Box
-                className="fixed right-0 space-y-1"
+                className="right-0 space-y-1"
                 pt={2}
-                pr={6}
                 justifyContent="flex-end"
                 alignContent="flex-end"
               >
                 <Text.Title
                   size="large"
-                  className="text-right text-red-700 w-full"
+                  className="text-right text-red-700 w-full whitespace-nowrap"
                 >
                   {getMoneyText(item)}
                 </Text.Title>
@@ -117,8 +121,9 @@ const ExpensePage: FC<ExpensePageProps> = ({ group }) => {
     <Page>
       <Welcome shouldBack={true} />
       <GroupWelcome />
-      <Box className="rounded-t-3xl h-full bg-white">
+      <Box className="rounded-t-3xl bg-white">
         <ExpenseList />
+        <Box className="h-32"></Box>
       </Box>
       <AddExpense group={group ?? groupDefault}>
         {({ open }) => (

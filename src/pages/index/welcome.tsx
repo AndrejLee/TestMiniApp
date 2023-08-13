@@ -61,24 +61,18 @@ export const Welcome: FC<{
 export const GroupHeader: FC = () => {
   const group = useRecoilValue(currentSelectedGroup);
   return (
-    <Box
-      flex
-      alignItems="center"
-      className="space-x-2 pr-20"
-      marginWidth={100}
-      p={2}
-    >
+    <Box flex alignItems="center" className="space-x-2" marginWidth={100} p={2}>
       <img
         className="w-10 h-10 rounded -inset left-5"
         src={getGroupIcon(group?.category ?? "COUPLE")}
       />
       <Text.Title
         size="xLarge"
-        className=" whitespace-nowrap overflow-hidden overflow-ellipsis"
+        className="w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
       >
         {group?.name ?? "Unknown"}
       </Text.Title>
-      <Text className="text-blue-700 font-semibold absolute right-8">
+      <Text className="text-blue-700 font-semibold whitespace-nowrap pr-2">
         Chia sẻ
       </Text>
     </Box>
@@ -86,7 +80,7 @@ export const GroupHeader: FC = () => {
 };
 
 export const GroupWelcome: FC = () => {
-  const currency = "đ";
+  const currency = "VND";
   const navigate = useNavigate();
   const group = useRecoilValue(currentSelectedGroup);
   const cateId = group?.category ?? "OTHER";
@@ -129,14 +123,19 @@ export const GroupWelcome: FC = () => {
   return (
     <Box className="space-x-2 bg-slate-100" m={3}>
       <GroupHeader />
-      <Box className="bg-blue-50 h-32 rounded-xl" p={4} flex>
-        <Box className="space-y-2">
+      <Box
+        className="bg-blue-50 rounded-xl"
+        p={4}
+        flex
+        justifyContent="flex-end"
+      >
+        <Box className="space-y-2 w-full">
           <Text size={"xLarge"}>
             {value < 0 ? "Mọi người còn nợ bạn" : "Bạn còn nợ tổng cộng"}
           </Text>
-          <Text size="xLarge" bold={true}>
+          <Text.Title size="xLarge">
             {utilGetMoneyText(value, currency)}
-          </Text>
+          </Text.Title>
           <Text
             size="large"
             bold
@@ -156,7 +155,7 @@ export const GroupWelcome: FC = () => {
             </Button>
           )}
         </Box>
-        <img className="absolute right-8" src={groupImg}></img>
+        <img className="h-28" src={groupImg}></img>
       </Box>
     </Box>
   );
@@ -172,14 +171,19 @@ export const NetWelcome: FC<{
   return (
     <Box className="space-x-2 bg-slate-100" m={3}>
       <GroupHeader />
-      <Box className="bg-blue-50 h-32 rounded-xl" p={4} flex>
-        <Box className="space-y-2">
+      <Box
+        className="bg-blue-50 h-32 rounded-xl"
+        p={4}
+        flex
+        justifyContent="flex-end"
+      >
+        <Box className="space-y-2 w-full">
           <Text.Title size={"xLarge"}>Tổng chi</Text.Title>
           <Text.Title size="xLarge" className="text-red-700">
             {utilGetMoneyText(payed, currency)}
           </Text.Title>
         </Box>
-        <img className="absolute right-8" src={billImg}></img>
+        <img className="h-20" src={billImg}></img>
       </Box>
     </Box>
   );

@@ -84,23 +84,27 @@ const ReportList: FC = () => {
       if (netInfo != null) {
         setCurrentPayed(netInfo.totalAmount);
         return (
-          <Box className="bg-white rounded-t-3xl h-full">
+          <Box className="bg-white rounded-t-3xl h-auto">
             <Box className="pt-4 pl-4 pr-4">
               <Text.Title size="normal">Danh sách dư nợ</Text.Title>
               <hr className="border-slate-500 border-1 mt-2"></hr>
             </Box>
 
             {netInfo.members.map((item, index, list) => (
-              <Box flex className="space-x-4 relative" p={3}>
+              <Box flex className="h-20" p={2}>
                 <img
-                  className="w-15 h-15 rounded-full"
+                  className="w-auto h-full rounded-full"
                   src={
                     isEmpty(item.user.avatarUrl)
-                      ? "https://img.icons8.com/ios/50/sun.png"
+                      ? "https://img.icons8.com/ios/100/sun.png"
                       : item.user.avatarUrl
                   }
                 />
-                <Box key={item.user.id} className="space-y-1" pt={2}>
+                <Box
+                  key={item.user.id}
+                  className="space-y-1 w-full pl-3"
+                  pt={2}
+                >
                   <Text.Title size="large">
                     {item.user.name}{" "}
                     {item.user.id == currentGroup?.owner.id ? "👑" : ""}
@@ -128,7 +132,7 @@ const ReportList: FC = () => {
                 item.user.id != currentUser?.id ? (
                   <button
                     className={
-                      "right-4 align-middle absolute top-7 w-16 h-8 font-semibold rounded-full" +
+                      "mt-4 w-24 h-8 mr-2 font-semibold rounded-full" +
                       (true
                         ? " bg-blue-500 text-white"
                         : " bg-yellow-200 text-amber-700")

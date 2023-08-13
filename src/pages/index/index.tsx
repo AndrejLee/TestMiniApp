@@ -107,6 +107,7 @@ const LoadMainResult: FC = () => {
             </Text>
           </Box>
         )}
+        <Box className="h-20"></Box>
       </Box>
       <Box className="fixed bottom-6 right-4">
         <Button size="large" onClick={() => createNewGroup()}>
