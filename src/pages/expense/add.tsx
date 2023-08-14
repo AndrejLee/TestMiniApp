@@ -159,7 +159,7 @@ export const AddExpense: FC<AddExpenseProps> = ({ children, group }) => {
               <Box flex className="space-x-4">
                 <img
                   className="w-11 h-11"
-                  src="https://img.icons8.com/ios/50/initiate-money-transfer.png"
+                  src="https://img.icons8.com/clouds/100/cash--v2.png"
                 />
                 <Input
                   placeholder="Tiền chi trả"
@@ -197,7 +197,7 @@ export const AddExpense: FC<AddExpenseProps> = ({ children, group }) => {
               <Box flex className="space-x-4">
                 <img
                   className="w-11 h-11"
-                  src="https://img.icons8.com/ios/50/goodnotes.png"
+                  src="https://img.icons8.com/clouds/100/goodnotes.png"
                 />
                 <Input
                   placeholder="Mô tả"
@@ -210,7 +210,7 @@ export const AddExpense: FC<AddExpenseProps> = ({ children, group }) => {
               <Box flex className="space-x-4">
                 <img
                   className="w-11 h-11"
-                  src="https://img.icons8.com/ios/50/calendar--v1.png"
+                  src="https://img.icons8.com/clouds/100/calendar--v1.png"
                 />
                 <input
                   className="h=11 pl-2"
@@ -222,7 +222,7 @@ export const AddExpense: FC<AddExpenseProps> = ({ children, group }) => {
               <Box flex className="space-x-4">
                 <img
                   className="w-11 h-11"
-                  src="https://img.icons8.com/ios/50/conference-call--v1.png"
+                  src="https://img.icons8.com/clouds/100/crowd--v2.png"
                 />
                 <Select
                   id="temp"
