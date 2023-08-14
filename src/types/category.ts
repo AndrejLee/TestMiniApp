@@ -37,47 +37,47 @@ export const ExpenseCategories = {
   OOD: <ExpenseCate>{
     id: "OOD",
     name: "Ăn uống",
-    icon: "https://img.icons8.com/ios/50/food.png",
+    icon: "https://img.icons8.com/bubbles/50/meal.png",
   },
   ACCOMMODATION: <ExpenseCate>{
     id: "ACCOMMODATION",
     name: "Nhà cửa",
-    icon: "https://img.icons8.com/ios/50/residence.png",
+    icon: "https://img.icons8.com/bubbles/50/home.png",
   },
   TRANSPORTATION: <ExpenseCate>{
     id: "TRANSPORTATION",
     name: "Di chuyển",
-    icon: "https://img.icons8.com/ios/50/airport-transfer.png",
+    icon: "https://img.icons8.com/bubbles/50/fiat-500.png",
   },
   SHOPPING: <ExpenseCate>{
     id: "SHOPPING",
     name: "Mua sắm",
-    icon: "https://img.icons8.com/ios/50/shopping-basket.png",
+    icon: "https://img.icons8.com/bubbles/50/shopping-cart-loaded.png",
   },
   BEAUTY: <ExpenseCate>{
     id: "BEAUTY",
     name: "Làm đẹp",
-    icon: "https://img.icons8.com/ios/50/eye-shadows--v2.png",
+    icon: "https://img.icons8.com/bubbles/50/aroma.png",
   },
   SPORTS: <ExpenseCate>{
     id: "SPORTS",
     name: "Thể thao",
-    icon: "https://img.icons8.com/ios/50/pass-the-baton.png",
+    icon: "https://img.icons8.com/bubbles/50/dumbbell.png",
   },
   ENTERTAINMENT: <ExpenseCate>{
     id: "ENTERTAINMENT",
     name: "Giải trí",
-    icon: "https://img.icons8.com/ios/50/theatre-mask.png",
+    icon: "https://img.icons8.com/bubbles/50/popcorn-time.png",
   },
   HEALTH: <ExpenseCate>{
     id: "HEALTH",
     name: "Sức khỏe",
-    icon: "https://img.icons8.com/ios/50/trust--v1.png",
+    icon: "https://img.icons8.com/bubbles/50/trust.png",
   },
   OTHER: <ExpenseCate>{
     id: "OTHER",
     name: "Khác",
-    icon: "https://img.icons8.com/ios/50/connection-status-off.png",
+    icon: "https://img.icons8.com/bubbles/50/create-new.png",
   },
 };
 
