@@ -99,12 +99,12 @@ export function GroupListRenderer<T>({
             key={renderKey ? renderKey(item) : i}
             onClick={() => onClick?.(item)}
             flex
-            className="border-inset rounded-2xl space-x-4"
-            p={4}
+            className="border-inset rounded-2xl space-x-3 border-black"
             m={3}
+            pl={2}
           >
-            <img className="w-10 h-10" src={getGroupIcon(item.category)} />
-            <Box className="" mt={1} pr={20}>
+            <img className="w-auto h-16" src={getGroupIcon(item.category)} />
+            <Box className="" mt={4} pr={20}>
               <Text.Title
                 className="overflow-ellipsis overflow-clip whitespace-nowrap"
                 size="large"

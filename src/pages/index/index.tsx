@@ -70,12 +70,6 @@ const LoadMainResult: FC = () => {
     selectGroup(group);
     navigate("/expense");
   };
-  const defaultIcon = GroupCategories.OTHER.icon;
-  const getIcon = (cateId: GroupCateId) => {
-    if (isUndefined(cateId)) return defaultIcon;
-    let temp = GroupCategories[cateId].icon;
-    return temp ?? defaultIcon;
-  };
 
   return (
     <Page>
