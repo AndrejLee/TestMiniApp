@@ -17,7 +17,13 @@ import { Category, CategoryId } from "types/category";
 import { Product } from "types/product";
 import { Cart } from "types/cart";
 import { Notification } from "types/notification";
-import { Group, groupDefault } from "types/group";
+import {
+  Group,
+  groupDefault,
+  groupDefault1,
+  groupDefault2,
+  groupDefault3,
+} from "types/group";
 import { Expense, expensesDefault } from "types/expense";
 import { calculateDistance } from "utils/location";
 import { Store } from "types/delivery";
@@ -435,7 +441,7 @@ export const currentUserState = selector<User | null>({
 
 export const currentListGroup = atom<Group[]>({
   key: "currentListGroup",
-  default: [groupDefault],
+  default: [groupDefault, groupDefault1, groupDefault2, groupDefault3],
 });
 
 export const currentSelectedGroup = atom<Group | null>({
