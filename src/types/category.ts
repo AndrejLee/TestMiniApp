@@ -99,22 +99,22 @@ export const GroupCategories = {
   HOME: <GroupCate>{
     id: "HOME",
     name: "Nhà chung",
-    icon: "https://img.icons8.com/ios/50/home--v1.png",
+    icon: "https://img.icons8.com/bubbles/50/cottage.png",
   },
   TRIP: <GroupCate>{
     id: "TRIP",
     name: "Du lịch",
-    icon: "https://img.icons8.com/ios/50/residence.png",
+    icon: "https://img.icons8.com/bubbles/50/passenger-with-baggage.png",
   },
   COUPLE: <GroupCate>{
     id: "COUPLE",
     name: "Cặp đôi",
-    icon: "https://img.icons8.com/ios/50/airport-transfer.png",
+    icon: "https://img.icons8.com/bubbles/50/novel.png",
   },
   OTHER: <GroupCate>{
     id: "OTHER",
     name: "Khác",
-    icon: "https://img.icons8.com/ios/50/connection-status-off.png",
+    icon: "https://img.icons8.com/bubbles/50/more.png",
   },
 };
 
