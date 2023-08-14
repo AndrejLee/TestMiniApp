@@ -30,12 +30,6 @@ const HomePage: React.FunctionComponent = () => {
   );
 };
 
-const GroupCell: FC<{ itemp: Group }> = (itemp) => {
-  let temp = itemp;
-  console.log(itemp);
-  return <Text></Text>;
-};
-
 const LoadMainResult: FC = () => {
   const currentUser = useRecoilValue(currentUserState);
   const [listGroup, setListGroup] = useRecoilState(currentListGroup);
