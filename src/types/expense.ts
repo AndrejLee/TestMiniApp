@@ -1,6 +1,6 @@
 import { round, toNumber } from "lodash";
 import { ExpenseCateId } from "./category";
-import { groupMembersDefault, User, userDefault, userDefault0 } from "./user";
+import { groupMembersDefault, User, userDefault0 } from "./user";
 
 export interface Expense {
   id: number;
@@ -20,6 +20,16 @@ export const expensesDefault = [
     amount: 10000,
     category: "BEAUTY",
     title: "Son",
+    date: new Date(),
+    user: userDefault0,
+    createdBy: userDefault0,
+    participant: groupMembersDefault,
+  },
+  <Expense>{
+    id: 1,
+    amount: 15000,
+    category: "HEALTH",
+    title: "Thuốc lag",
     date: new Date(),
     user: userDefault0,
     createdBy: userDefault0,

@@ -158,7 +158,7 @@ export const AddExpense: FC<AddExpenseProps> = ({ children, group }) => {
             <Box className="space-y-6 mt-2" p={4}>
               <Box flex className="space-x-4">
                 <img
-                  className="w-11 h-11"
+                  className="w-12 h-12"
                   src="https://img.icons8.com/clouds/100/cash--v2.png"
                 />
                 <Input
@@ -175,7 +175,7 @@ export const AddExpense: FC<AddExpenseProps> = ({ children, group }) => {
                 />
               </Box>
               <Box flex className="space-x-4">
-                <img className="w-11 h-11" src={getExpenseIcon(exCate)} />
+                <img className="w-12 h-12" src={getExpenseIcon(exCate)} />
                 <Select
                   placeholder="Mục đích"
                   multiple={false}
@@ -196,7 +196,7 @@ export const AddExpense: FC<AddExpenseProps> = ({ children, group }) => {
               </Box>
               <Box flex className="space-x-4">
                 <img
-                  className="w-11 h-11"
+                  className="w-12 h-12"
                   src="https://img.icons8.com/clouds/100/goodnotes.png"
                 />
                 <Input
@@ -209,7 +209,7 @@ export const AddExpense: FC<AddExpenseProps> = ({ children, group }) => {
               </Box>
               <Box flex className="space-x-4">
                 <img
-                  className="w-11 h-11"
+                  className="w-12 h-12"
                   src="https://img.icons8.com/clouds/100/calendar--v1.png"
                 />
                 <input
@@ -221,7 +221,7 @@ export const AddExpense: FC<AddExpenseProps> = ({ children, group }) => {
               </Box>
               <Box flex className="space-x-4">
                 <img
-                  className="w-11 h-11"
+                  className="w-12 h-12"
                   src="https://img.icons8.com/clouds/100/crowd--v2.png"
                 />
                 <Select

@@ -58,7 +58,7 @@ const ExpenseList: FC = () => {
     case "hasError":
       return <p>Error loading data</p>;
     case "hasValue":
-      const expenses = asyncDataLoadable.contents;
+      const expenses = expensesDefault;
       if (expenses.length <= 0) {
         return (
           <Text
@@ -71,13 +71,10 @@ const ExpenseList: FC = () => {
       }
       console.log(expenses);
       return (
-        <Box className="">
+        <Box className="pt-6 pl-4 pr-4 space-y-3">
           {expenses.map((item, index, list) => (
-            <Box flex className="space-x-4" p={5}>
-              <img
-                className="w-15 h-15 pt-2"
-                src={getExpenseIcon(item.category)}
-              />
+            <Box flex className="space-x-2">
+              <img className="w-16 h-16" src={getExpenseIcon(item.category)} />
               <Box key={item.id} className="space-y-1 w-full" pt={2}>
                 <Text.Title size="large">
                   {item.title.length > 0 ? item.title : "-"}

@@ -61,9 +61,9 @@ export const Welcome: FC<{
 export const GroupHeader: FC = () => {
   const group = useRecoilValue(currentSelectedGroup);
   return (
-    <Box flex alignItems="center" className="space-x-2" marginWidth={100} p={2}>
+    <Box flex alignItems="center" className="space-x-2 pl-2 pr-2">
       <img
-        className="w-10 h-10 rounded -inset left-5"
+        className="w-14 h-14 left-5"
         src={getGroupIcon(group?.category ?? "COUPLE")}
       />
       <Text.Title

@@ -93,7 +93,7 @@ const ReportList: FC = () => {
             {netInfo.members.map((item, index, list) => (
               <Box flex className="h-20" p={2}>
                 <img
-                  className="w-auto h-full rounded-full"
+                  className="mt-1 ml-2 w-14 h-14 rounded-full bg-blue-300"
                   src={
                     isEmpty(item.user.avatarUrl)
                       ? "https://img.icons8.com/ios/100/sun.png"
