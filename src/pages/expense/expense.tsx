@@ -58,7 +58,7 @@ const ExpenseList: FC = () => {
     case "hasError":
       return <p>Error loading data</p>;
     case "hasValue":
-      const expenses = expensesDefault;
+      const expenses = asyncDataLoadable.contents;
       if (expenses.length <= 0) {
         return (
           <Text
