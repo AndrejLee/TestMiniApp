@@ -124,7 +124,7 @@ const ExpensePage: FC<ExpensePageProps> = ({ group }) => {
         <ExpenseList />
         <Box className="h-32"></Box>
       </Box>
-      <AddExpense group={group ?? groupDefault}>
+      <AddExpense>
         {({ open }) => (
           <Box className="fixed bottom-6 right-4">
             <Button type="highlight" size="large" onClick={open}>

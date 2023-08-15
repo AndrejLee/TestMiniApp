@@ -10,7 +10,7 @@ import {
 } from "state";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { Box, Button, Input, Select, Text } from "zmp-ui";
-import { Group } from "types/group";
+import { Group, groupDefault } from "types/group";
 import { isArray, isUndefined, toNumber } from "lodash";
 import { hideKeyboard, onCallbackData, showToast } from "zmp-sdk";
 import {
@@ -30,17 +30,16 @@ export interface AddExpenseData {
 }
 
 export interface AddExpenseProps {
-  group: Group;
-  selected?: AddExpenseData;
   children: (methods: { open: () => void; close: () => void }) => ReactNode;
 }
 
-export const AddExpense: FC<AddExpenseProps> = ({ children, group }) => {
+export const AddExpense: FC<AddExpenseProps> = ({ children }) => {
   const [money, setMoney] = useState(0);
   const [input, setInput] = useState("");
   const [visible, setVisible] = useState(false);
   const currentUser = useRecoilValue(currentUserState);
   const currentGroup = useRecoilValue(currentSelectedGroup);
+  const group = currentGroup ?? groupDefault;
   const [listExpense, setListExpense] = useRecoilState(atomExpenseState);
   const [exCate, setExCate] = useState(ExpenseCategories.OTHER.id);
   const cates: Array<ExpenseCateId> = [
@@ -236,7 +235,7 @@ export const AddExpense: FC<AddExpenseProps> = ({ children, group }) => {
                   }}
                   multiple
                 >
-                  {group.members.map((item) => (
+                  {currentGroup?.members.map((item) => (
                     <Option value={item.id} title={item.name} />
                   ))}
                 </Select>
