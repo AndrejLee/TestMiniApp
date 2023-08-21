@@ -27,7 +27,8 @@ import { Group } from "types/group";
 import { Net, NetInfo } from "types/net";
 import { openShareSheet } from "zmp-sdk/apis";
 import { isEmpty, isUndefined } from "lodash";
-import { userDefault0 } from "types/user";
+import { User, userDefault0 } from "types/user";
+import { openChat } from "zmp-sdk";
 
 const ReportList: FC = () => {
   var currentUser = useRecoilValue(currentUserState);
@@ -58,17 +59,17 @@ const ReportList: FC = () => {
 
   const asyncDataLoadable = useRecoilValueLoadable(netState);
 
-  const handleOnClick = (balance: number) => {
-    if (balance > 0) {
-      openShareSheet({
-        type: "zmp",
-        data: {
-          path: "/",
-          title: "My Zalo Mini App - HomePage",
-          description: "Home page",
-          thumbnail: "https://sample-videos.com/img/Sample-jpg-image-50kb.jpg",
-        },
-        success: (res) => {},
+  const handleOnClick = (
+    group: Group | null,
+    profile: User,
+    balance: number
+  ) => {
+    if (balance > 0 && group != null) {
+      openChat({
+        type: "user",
+        id: profile.id,
+        message: `Xin Chào ${profile.name}, trả cho nhóm ${group.name} ${balance} mau`,
+        success: () => {},
         fail: (err) => {},
       });
     }
@@ -138,7 +139,9 @@ const ReportList: FC = () => {
                         : " bg-yellow-200 text-amber-700")
                     }
                     disabled={item.balance == 0}
-                    onClick={() => handleOnClick(item.balance)}
+                    onClick={() =>
+                      handleOnClick(currentGroup, item.user, item.balance)
+                    }
                   >
                     {item.balance == 0 ? "" : item.balance > 0 ? "Nhắc" : "Trả"}
                   </button>
