@@ -89,6 +89,10 @@ export function getExpenseIcon(cateId: ExpenseCateId) {
 
 export type GroupCateId = "HOME" | "TRIP" | "COUPLE" | "OTHER";
 
+export function isGroupCateId(value: string): value is GroupCateId {
+  return value === "HOME" || value === "TRIP" || value === "COUPLE" || value === "OTHER";
+}
+
 export interface GroupCate {
   id: GroupCateId;
   name: string;

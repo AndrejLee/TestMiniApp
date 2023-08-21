@@ -13,7 +13,7 @@ import milkteaIcon from "static/category-milktea.svg";
 import drinksIcon from "static/category-drinks.svg";
 import breadIcon from "static/category-bread.svg";
 import juiceIcon from "static/category-juice.svg";
-import { Category, CategoryId } from "types/category";
+import { Category, CategoryId, GroupCateId } from "types/category";
 import { Product } from "types/product";
 import { Cart } from "types/cart";
 import { Notification } from "types/notification";
@@ -454,9 +454,9 @@ export const newGroupTitleName = atom({
   default: "",
 });
 
-export const newGroupCategory = atom({
+export const newGroupCategory = atom<GroupCateId>({
   key: "newGroupCategory",
-  default: "",
+  default: "OTHER",
 });
 
 export const newCreatedGroupId = atom({

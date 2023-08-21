@@ -1,13 +1,7 @@
-import { Divider } from "components/divider";
-import { debounce } from "lodash";
+import { debounce, indexOf } from "lodash";
 import React, { FC, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  useRecoilState,
-  useRecoilValue,
-  useResetRecoilState,
-  useSetRecoilState,
-} from "recoil";
+import { useRecoilState, SetterOrUpdater, useRecoilValue } from "recoil";
 import {
   currentUserState,
   newCreatedGroupId,
@@ -17,7 +11,7 @@ import {
 import { showToast, openProfilePicker } from "zmp-sdk/apis";
 import { Page, Header, Box, Text, Input, Select, Button } from "zmp-ui";
 import { SelectValueType } from "zmp-ui/select";
-import { GroupCategories, GroupCateId } from "types/category";
+import { GroupCategories, GroupCateId, isGroupCateId } from "types/category";
 import { hideKeyboard } from "zmp-sdk";
 
 const CreateGroup: FC = () => {
@@ -35,9 +29,15 @@ const CreateGroup: FC = () => {
     []
   );
 
-  const onGroupCategoryChange = (category: SelectValueType[]) => {
+  const onGroupCategoryChange = (
+    category: SelectValueType | SelectValueType[] | undefined,
+    setter: SetterOrUpdater<GroupCateId>
+  ) => {
     hideKeyboard;
-    console.log(category.toString());
+    console.log(category?.toString() ?? "empty category");
+    if (category != undefined && isGroupCateId(category.toString())) {
+      setter(category.toString() as GroupCateId);
+    }
   };
 
   const doCreateGroupAndPickFriends = () => {
@@ -48,7 +48,7 @@ const CreateGroup: FC = () => {
     } else {
       console.log(
         JSON.stringify({
-          category: selectedCate.toString(),
+          category: selectedCate,
           name: keyword,
         })
       );
@@ -204,8 +204,8 @@ const CreateGroup: FC = () => {
           closeOnSelect
           placeholder="Mục đích"
           multiple={false}
-          defaultValue={"OTHER"}
-          onChange={(value) => onGroupCategoryChange(value)}
+          defaultValue={selectedCate}
+          onChange={(value) => onGroupCategoryChange(value, setCategory)}
         >
           {cates.map((cate) => (
             <Option value={cate} title={GroupCategories[cate].name} />
